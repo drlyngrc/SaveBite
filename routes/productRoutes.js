@@ -1,12 +1,15 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-router.get("/purchase", (req, res) => {
-    res.render("main/purchase.ejs");
-});
+router.get("/foods", (req, res) => {
+    try {
+        console.log(req.session.userId);
+        if(!req.session.userId) return res.send("Failed to login.");
 
-router.get("/sell", (req, res) => {
-    res.render("main/sell.ejs");
+        res.render("main/purchase.ejs");
+    } catch (e) {
+        res.send(e.message);
+    }
 });
 
 export default router;
