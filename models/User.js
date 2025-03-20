@@ -35,15 +35,17 @@ class Customer extends User {
         this.ordersList = [];
     }
     
-    placeOrder(){
-
+    placeOrder(orderId, sellerId, totalAmount, foodItemsId = []) {
+        const newOrder = new Order(orderId, this.userId, sellerId, totalAmount, "Placed", foodItemsId);
+        this.ordersList.push(newOrder);
+        return "Order placed successfully!";
     }
 
     viewOrder(){
-        if (this.orders.length === 0) {
+        if (this.ordersList.length === 0) {
             return "No order found.";
         }
-        return this.orders.map(order => order.trackOrder());
+        return this.ordersList.map(order => order.trackOrder());
     }
 }
 
