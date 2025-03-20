@@ -17,7 +17,8 @@ export const signup = async (req, res) => {
             name,
             email,
             contact,
-            address
+            address,
+            createAt: new Date().toISOString()
         }
 
         await setDoc(doc(db, "users", user.uid), userData);
