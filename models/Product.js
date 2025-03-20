@@ -1,12 +1,13 @@
 class Product {
-    constructor(userId, productId, name, category, price, quantity, expiryDate) {
-        this.foodId = foodId;
+    constructor(productId, userId, name, category, price, quantity, expiryDate) {
+        this.productId = productId;
+        this.userId = userId;
         this.name = name;
         this.category = category;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price;
         this.expiryDate = expiryDate;
-        this.createdAt = createdAt || new Date().toISOString(); 
+        this.createdAt = new Date().toISOString();
     }
 }
 

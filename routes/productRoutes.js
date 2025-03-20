@@ -1,15 +1,11 @@
 import express from "express";
+import { addProduct, getProductById, getAllProducts } from "../controllers/productController.js";
+
 const router = express.Router();
 
-router.get("/foods", (req, res) => {
-    try {
-        console.log(req.session.userId);
-        if(!req.session.userId) return res.send("Failed to login.");
+router.get("/foods/:id", getProductById);
+router.get("/foods", getAllProducts);
 
-        res.render("main/purchase.ejs");
-    } catch (e) {
-        res.send(e.message);
-    }
-});
+router.post("/api/foods/add-product", addProduct);
 
 export default router;
