@@ -1,0 +1,49 @@
+@import "../global.css";
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.order-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 1.5rem;
+}
+
+.order-detail-view {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.order-detail-card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 3px;
+}
+
+.order-detail-card-list-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+}
+
+.card-title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.2rem;
+}
+
+.card-list-item {
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1rem;
+  color:rgb(74, 74, 74);
+}
