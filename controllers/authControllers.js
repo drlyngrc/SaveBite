@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password, address } = req.body;
+        const { name, email, password, contact, address } = req.body;
 
         if(!auth) {
             return res.status(500).json({ error: "Firebase Auth is not initialized."});
@@ -16,6 +16,7 @@ export const signup = async (req, res) => {
         const userData = {
             name,
             email,
+            contact,
             address
         }
 
@@ -24,7 +25,6 @@ export const signup = async (req, res) => {
         return res.status(201).json({
             message: "User created successfully"
         });
-
     } catch (e) {
         return res.status(400).json({
             success: false,

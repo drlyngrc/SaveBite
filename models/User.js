@@ -7,40 +7,6 @@ class User {
     }
 }
 
-class Seller extends User{
-   constructor(userId, name, email, password) {
-        super(userId, name, email, password);
-        this.foodItems = [];
-    }
+class Customer extends User { }
 
-    listFoodItem(foodItem) {
-      
-    }
-
-    updateFoodItem(foodItem) {
-      
-    }
-
-    removeFoodItem(foodItem) {
-      
-    }
-}
-
-class Buyer extends User{
-    constructor(userId, name, email, password) {
-          super(userId, name, email, password);
-      }
-
-    browseFoodItem() {
-      
-    }
-
-    placeOrder(order) {
-      
-    }
-
-    makePayment(payment) {
-      
-    }
-}
-
+class Admin extends User { }

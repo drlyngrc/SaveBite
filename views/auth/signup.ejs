@@ -12,6 +12,7 @@
             <input type="text" id="name" placeholder="Name" required>
             <input type="text" id="email" placeholder="Email" required>
             <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="contact" placeholder="Contact Number" required>
             <input type="text" id="address" placeholder="Address" required>
             <input type="submit" class="primary-button" value="Sign Up">
             <a href="/login">Already have an account?</a>
@@ -26,6 +27,7 @@
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+            const contact = document.getElementById("contact").value;
             const address = document.getElementById("address").value;
             const message = document.getElementById("message");
 
@@ -33,7 +35,7 @@
                 const response = await fetch("/api/signup", {
                     method: "POST",
                     headers: { "Content-Type": "application/json"},
-                    body: JSON.stringify({ name, email, password, address })
+                    body: JSON.stringify({ name, email, password, contact, address })
                 });
 
                 const result = await response.json();
