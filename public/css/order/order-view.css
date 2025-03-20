@@ -1,9 +1,16 @@
 @import "../global.css";
 
+
 .content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.main-content {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  row-gap: 2rem;
 }
 
 .order-body {
@@ -12,7 +19,7 @@
   column-gap: 1.5rem;
 }
 
-.order-detail-view {
+.order-detail-view, .order-view {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
@@ -21,7 +28,7 @@
 .order-detail-card {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
+  row-gap: 0.75rem;
   padding: 0.75rem;
   border: 1px solid rgb(189, 189, 189);
   border-radius: 3px;
@@ -30,20 +37,103 @@
 .order-detail-card-list-item {
   display: flex;
   flex-direction: column;
-  row-gap: 0.2rem;
+  row-gap: 0.25rem;
 }
 
 .card-title {
-  font-family: "Manrope", sans-serif;
   font-weight: 700;
   font-style: normal;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .card-list-item {
-  font-family: "Manrope", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1rem;
-  color:rgb(74, 74, 74);
+  font-size: 0.9rem;
+  color: var(--body-font-color);
+}
+
+.order-id-title {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.75rem;
+}
+
+.order-item-listview {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.order-item-left {
+  display: flex;
+  gap: 1rem;
+}
+
+.order-item-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.order-item-thumbnail {
+  width: 100px;
+  height: 100px;
+}
+
+.order-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.order-item-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.order-category {
+  font-weight: 400;
+  font-size: 0.9rem;  row-gap: 0.5rem;
+
+  color: var(--body-font-color);
+}
+
+.order-additional-details {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--body-font-color);
+}
+
+.order-item-details-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-item-action {
+  font-size: 1.3rem;
+}
+
+.order-item-price-spacer {
+  font-weight: 400;
+}
+
+.order-item-breakdown {
+  color: var(--body-font-color);
+}
+
+.order-item-total-price {
+  font-weight: 700;
+}
+
+.order-item-detail-list-item {
+
 }

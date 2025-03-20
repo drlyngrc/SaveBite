@@ -8,6 +8,8 @@ body {
 :root {
     --primary-color: #000000;
     --secondary-color: #000000;
+    --body-font-color: rgb(74, 74, 74);
+    --header-font-color: black;
 }
 
 .primary-button {
