@@ -43,7 +43,7 @@
 .card-title {
   font-weight: 700;
   font-style: normal;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .card-list-item {
@@ -118,10 +118,6 @@
   gap: 0.5rem;
 }
 
-.order-item-action {
-  font-size: 1.3rem;
-}
-
 .order-item-price-spacer {
   font-weight: 400;
 }
@@ -134,6 +130,58 @@
   font-weight: 700;
 }
 
-.order-item-detail-list-item {
+.order-summary-detail-list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
+.order-summary-detail-list-item {
+  display: grid;
+  grid-template-columns: 5fr 3fr 1fr;
+  color: var(--body-font-color);
+  font-size: 0.9rem;
+}
+
+.order-summary-detail-price {
+  text-align: right;
+}
+
+.order-total-title {
+  font-weight: 700;
+  color: var(--header-font-color);
+}
+
+.order-total-price {
+  font-weight: 700;
+  color: var(--header-font-color);
+}
+
+.order-confirmation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.order-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-reminder {
+  font-size: 0.9rem;
+  color: var(--body-font-color);
+}
+
+.order-detail-card-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-confirm-button {
 }
