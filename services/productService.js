@@ -1,6 +1,6 @@
 import { db } from "../config/firebase.js";
 import { collection, addDoc, setDoc, getDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
-import Product from "../models/product.js";
+import Product from "../models/Product.js";
 import { v4 as uuidv4 } from 'uuid';
 
 class ProductService {
