@@ -18,20 +18,22 @@
             </div>
             <div class="order-body">
                 <div class="item-view">
-                    <img class="item-image" src="https://res.cloudinary.com/demo/image/upload/e_replace_color:lightblue:17/sample" alt="">
+                    <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
                 </div>
                 <div class="order-detail-view">
                     <div class="order-detail-card">
                         <div class="order-detail-header">
                             <div class="product-detail">
-                                <div class="product-category">Product Category</div>
-                                <div class="product-title">Product Title</div>
-                                <div class="product-price">₱1,000.00</div>
+                                <div class="product-category"><%= product.category %></div>
+                                <div class="product-title"><%= product.name %></div>
+                                <div class="product-price">₱<%= product.price %></div>
+                                <div class="description-text">Quantity: <%= product.quantity %></div>
+                                <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
                             </div>
                         </div>
                         <div class="description-detail">
                             <div class="description-label">Description</div>
-                            <div class="description-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum quibusdam ab laboriosam natus porro quis tempore cumque eaque, soluta fugiat deserunt, voluptatibus doloribus deleniti expedita exercitationem atque modi ea animi!</div>
+                            <div class="description-text"><%= product.description %></div>
                         </div>
                         <hr class="line-spacer">
                         <div class="actions">

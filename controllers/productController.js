@@ -31,8 +31,7 @@ export const getProductById = async (req, res) => {
             return res.status(404).json({ message: "Product not found" });
         }
 
-        console.log(product);
-        res.status(200).json(product);
+        res.render("product/view-product.ejs", { product });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

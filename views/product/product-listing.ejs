@@ -110,10 +110,9 @@
 
       productSquares.forEach(productSquare => {
         productSquare.addEventListener("click", async () => {
-          const productId = document.getElementById("product.id").value;
-          console.log(`product id: ${productId}`);
+          const productId = productSquare.querySelector("input:nth-of-type(2)").value;
 
-          window.location.href = `/product/${productId}`;
+          window.location.href = `/product/view/${productId}`;
         });
       });
     </script>
