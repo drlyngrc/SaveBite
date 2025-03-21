@@ -1,11 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | SaveBite</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/product/add-product.css">
 </head>
 <body>
-  Add Product
+    <div class="content-wrapper">
+        <div class="side-nav">
+
+        </div>
+        <div class="main-content">
+            <div class="order-header">
+                <div class="order-id">
+                    <span class="order-id-title">Add Product</span>
+                </div>
+            </div>
+            <div class="order-body">
+                <div class="order-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                          <div class="card-title">General Information</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Name</div>
+                            <input class="text-field" type="text" name="product-name" id="product-name" placeholder="Enter product name">
+                          </div>
+                          <div class="field-set">
+                            <div class="field-label">Description</div>
+                            <textarea class="text-field-area" id="product-description" maxlength="255" rows="5" cols="40" placeholder="Enter description (max 255 characters)"></textarea>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="card-title">Pricing</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Exact Price (₱)</div>
+                            <input class="text-field" type="text" name="product-price" id="product-price" placeholder="Enter price per item">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="card-title">Inventory</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="inventory-split">
+                            <div class="field-set">
+                              <div class="field-label">Quantity</div>
+                              <input class="text-field" type="number" name="product-price" id="product-price" placeholder="Enter price per item">
+                            </div>
+                            <div class="field-set">
+                              <div class="field-label">Expiry Date</div>
+                              <input class="text-field" type="date" name="product-price" id="product-price" placeholder="Enter price per item">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-detail-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="order-detail-card-title">
+                              <div class="card-title">Product Media</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Photos</div>
+                              <div class="image-upload-container">
+                                <div class="image-list">
+                                </div>
+                                <label for="product-image" class="solid-button">
+                                    Add Image
+                                </label>
+                                <input type="file" id="product-image" accept="image/*" multiple style="display: none;">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="order-detail-card-title">
+                                <div class="card-title">Category</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Category</div>
+                            <select name="product-category" id="product-category" class="dropdown-select">
+                              <option value="fruits">Fruits</option>
+                              <option value="vegetables">Vegetables</option>
+                              <option value="grains">Grains & Cereals</option>
+                              <option value="legumes">Legumes & Beans</option>
+                              <option value="dairy">Dairy Products</option>
+                              <option value="meat">Meat & Poultry</option>
+                              <option value="seafood">Seafood</option>
+                              <option value="eggs">Eggs</option>
+                              <option value="nuts">Nuts & Seeds</option>
+                            </select>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+      document.getElementById("product-image").addEventListener("change", function(event) {
+          const imageList = document.querySelector(".image-list");
+
+          Array.from(event.target.files).forEach(file => {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  const img = document.createElement("img");
+                  img.src = e.target.result;
+                  img.alt = "Uploaded Image";
+                  imageList.appendChild(img);
+              };
+              reader.readAsDataURL(file);
+          });
+      });
+    </script>
 </body>
 </html>

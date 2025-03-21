@@ -2,6 +2,8 @@
 
 body {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Manrope', sans-serif;
 }
 
@@ -10,6 +12,8 @@ body {
     --secondary-color: #000000;
     --body-font-color: rgb(74, 74, 74);
     --header-font-color: black;
+    --solid-gray-bg-color: rgb(249, 249, 249);
+    --pale-outline-color: rgb(189, 189, 189);
 }
 
 .primary-button {
@@ -29,6 +33,7 @@ body {
     border: none;
     background-color: black;
     color: white;
+    cursor: pointer;
 }
 
 .action-button {
