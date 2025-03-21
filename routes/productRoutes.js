@@ -10,6 +10,10 @@ router.get("/add-product", (req, res) => {
   res.render("product/add-product.ejs");
 });
 
+router.get("/product/view/:id", (req, res) => {
+  res.render("product/view-product.ejs");
+});
+
 router.get("/product-listing", (req, res) => {
   res.render("product/product-listing.ejs");
 });
