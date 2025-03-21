@@ -3,8 +3,13 @@ import { addProduct, getProductById, getAllProducts } from "../controllers/produ
 
 const router = express.Router();
 
-router.get("/foods/:id", getProductById);
-router.get("/foods", getAllProducts);
+router.get("/product/:id", getProductById);
+router.get("/product", getAllProducts);
+
+router.get("/add-product", (req, res) => {
+  res.render("product/add-product.ejs");
+});
+
 
 router.post("/api/foods/add-product", addProduct);
 
