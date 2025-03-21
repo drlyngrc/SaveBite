@@ -4,9 +4,19 @@ const productService = new ProductService();
 
 export const addProduct = async (req, res) => {
     try {
-        const { userId, name, category, quantity, price, expiryDate } = req.body;
-        const product = await productService.addProduct(userId, name, quantity, category, price, expiryDate);
-        res.status(201).json(product);
+        const { name, description, category, quantity, price, expiry, image } = req.body;
+        const userId = req.session.userId;
+        console.log(userId);
+        const product = await productService.addProduct(userId, name, description, category, quantity, price, expiry, image);
+        
+        if (!userId) {
+            return res.status(400).json({ error: "User ID is missing from the session" });
+        }
+
+        res.status(201).json({
+            product,
+            message: "Succesfully added the item"
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

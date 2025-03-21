@@ -183,5 +183,8 @@
   align-items: center;
 }
 
-.order-confirm-button {
+.image-list img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
 }

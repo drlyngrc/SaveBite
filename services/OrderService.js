@@ -1,4 +1,4 @@
-import ProductService from "./ProductService.js"; // Import the base class
+import ProductService from "./productService.js"; // Import the base class
 import { collection, doc, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
