@@ -4,13 +4,13 @@ import { login, signup, logout } from "../controllers/authControllers.js"
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-    if(req.session.userId) return res.redirect("/foods");
+    if(req.session.userId) return res.redirect("/add-product");
 
     res.render("auth/login.ejs");
 });
 
 router.get("/signup", (req, res) => {
-    if(req.session.userId) return res.redirect("/foods");
+    if(req.session.userId) return res.redirect("/add-product");
 
     res.render("auth/signup.ejs");
 });

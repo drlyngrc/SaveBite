@@ -11,6 +11,6 @@ router.get("/add-product", (req, res) => {
 });
 
 
-router.post("/api/foods/add-product", addProduct);
+router.post("/api/product/add-product", addProduct);
 
 export default router;

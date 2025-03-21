@@ -8,9 +8,9 @@ class ProductService {
         this.productsCollection = collection(db, "products");
     }
 
-    async addProduct(userId, category, name, quantity, price, expiryDate) {
+    async addProduct(userId, name, description, category, quantity, price, expiryDate, image) {
         const productId = uuidv4();
-        const newProduct = new Product(productId, userId, category, name, quantity, price, expiryDate);
+        const newProduct = new Product(productId, userId, name, description, category, quantity, price, expiryDate, image);
         const productRef = doc(this.productsCollection, productId);
         await setDoc(productRef, { ...newProduct });
 
