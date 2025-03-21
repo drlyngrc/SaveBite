@@ -61,6 +61,10 @@
                           ₱<%= product.price %>.00
                         </div>
                         <input type="text" style="display: none;" value="<%= product.category %>">
+                        <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
+                        <div class="product-quantity">
+                          Quantity: <%= product.quantity %>
+                        </div>
                       </div>
                     </div>
                   <% }) %>
@@ -103,6 +107,15 @@
           }
         });
       }
+
+      productSquares.forEach(productSquare => {
+        productSquare.addEventListener("click", async () => {
+          const productId = document.getElementById("product.id").value;
+          console.log(`product id: ${productId}`);
+
+          window.location.href = `/product/${productId}`;
+        });
+      });
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 import OrderService from "./OrderService.js";
-import ProductService from "./ProductService.js";
+import ProductService from "./productService.js";
 
 class PaymentService {
     constructor() {
