@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing | SaveBite</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/product/product-listing.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="side-nav">
+
+        </div>
+        <div class="main-content">
+            <div class="order-header">
+                <div class="order-id">
+                    <span class="order-id-title">Product Listing</span>
+                </div>
+                <div class="search-bar">
+                  <i class='bx bx-search action-button'></i>
+                  <input class="search-bar-field text-field" type="text" name="search-query" placeholder="Search for a product...">
+                </div>
+            </div>
+            <div class="order-body">
+                <div class="order-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                          <div class="card-title">Category</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Filter by categories</div>
+                            <div class="category-list">
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="fruits"> Fruits</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="vegetables"> Vegetables</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="grains"> Grains & Cereals</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="legumes"> Legumes & Beans</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="dairy"> Dairy Products</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="meat"> Meat & Poultry</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="seafood"> Seafood</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="eggs"> Eggs</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="nuts"> Nuts & Seeds</label>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-grid">
+                  <div class="product-square">
+                    <div class="product-top">
+                      <img class="product-thumbnail" src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="sample">
+                    </div>
+                    <div class="product-bottom">
+                      <div class="product-title">
+                        product title
+                      </div>
+                      <div class="product-price">
+                        ₱1,000.00
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-square">
+                    <div class="product-top">
+                      <img class="product-thumbnail" src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="sample">
+                    </div>
+                    <div class="product-bottom">
+                      <div class="product-title">
+                        product title
+                      </div>
+                      <div class="product-price">
+                        ₱1,000.00
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-square">
+                    <div class="product-top">
+                      <img class="product-thumbnail" src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="sample">
+                    </div>
+                    <div class="product-bottom">
+                      <div class="product-title">
+                        product title
+                      </div>
+                      <div class="product-price">
+                        ₱1,000.00
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-square">
+                    <div class="product-top">
+                      <img class="product-thumbnail" src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="sample">
+                    </div>
+                    <div class="product-bottom">
+                      <div class="product-title">
+                        product title
+                      </div>
+                      <div class="product-price">
+                        ₱1,000.00
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-square">
+                    <div class="product-top">
+                      <img class="product-thumbnail" src="https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg" alt="sample">
+                    </div>
+                    <div class="product-bottom">
+                      <div class="product-title">
+                        product title
+                      </div>
+                      <div class="product-price">
+                        ₱1,000.00
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+      document.querySelector(".search-bar-field").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          search(this.value)
+        }
+      });
+
+      function search(keyword) {
+        console.log(keyword);
+      }
+    </script>
+</body>
+</html>

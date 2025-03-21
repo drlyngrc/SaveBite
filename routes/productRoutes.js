@@ -10,6 +10,10 @@ router.get("/add-product", (req, res) => {
   res.render("product/add-product.ejs");
 });
 
+router.get("/product-listing", (req, res) => {
+  res.render("product/product-listing.ejs");
+});
+
 
 router.post("/api/foods/add-product", addProduct);
 
