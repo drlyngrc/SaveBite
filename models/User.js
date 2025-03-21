@@ -1,4 +1,4 @@
-import Order from './Order.js';
+// import Order from './Order.js';
 
 class User {
     constructor(userId, name, email, password, contact) {
@@ -8,8 +8,13 @@ class User {
         this.password = password;
         this.contact = contact;
         this.balance = 0;
+        this.createAt = new Date().toISOString();
     }
+}
 
+export default User;
+
+/* 
     updateProfile(updateName, updateEmail, updatePassword, updateContact) {
         if (updateName) this.name = updateName;
         if (updateEmail) this.email = updateEmail;
@@ -67,7 +72,4 @@ class Admin extends User {
         }
         return `User ID ${userId} not found.`;
     }
-
-}
-
-export {User, Customer, Admin};
+*/
