@@ -40,8 +40,8 @@ export const getProductById = async (req, res) => {
 export const getAllProducts = async (req, res) => {
     try {
         const products = await productService.getAllProducts();
-        res.status(200).json(products);
 
+        res.render("product/product-listing.ejs", { products });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
