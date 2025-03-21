@@ -7,19 +7,6 @@ class Payment {
         this.amount = amount;
         this.paymentStatus = paymentStatus;
     }
-
-    processPayment() {
-        if (this.validatePaymentDetails()) {
-            this.paymentStatus = "Completed";
-            return true;
-        }
-        this.paymentStatus = "Failed";
-        return false;
-    }
-
-    validatePaymentDetails() {
-        return this.amount > 0 && this.paymentMethod && this.orderId;
-    }
 }
 
 export default Payment;

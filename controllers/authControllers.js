@@ -1,6 +1,7 @@
 import { auth, db } from "../config/firebase.js";
 import { doc, setDoc, getDocs, collection } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import User from "../models/User.js";
 
 export const signup = async (req, res) => {
     try {
@@ -13,15 +14,9 @@ export const signup = async (req, res) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        const userData = {
-            name,
-            email,
-            contact,
-            address,
-            createAt: new Date().toISOString()
-        }
+        const userData = new User(user.uid, name, email, contact, address);
 
-        await setDoc(doc(db, "users", user.uid), userData);
+        await setDoc(doc(db, "users", user.uid), { ...userData });
 
         return res.status(201).json({
             message: "User created successfully"

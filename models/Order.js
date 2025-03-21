@@ -7,28 +7,6 @@ class Order {
         this.orderStatus = orderStatus;
         this.foodItemsId = foodItemsId;
     }
-
-    placeOrder() {
-        this.orderStatus = "Placed";
-        return true;
-    }
-
-    cancelOrder() {
-        if (this.orderStatus !== "Delivered" && this.orderStatus !== "Completed") {
-            this.orderStatus = "Cancelled";
-            return true;
-        }
-        return false;
-    }
-
-    trackOrder() {
-        return {
-            orderId: this.orderId,
-            status: this.orderStatus,
-            buyerId: this.buyerId,
-            sellerId: this.sellerId
-        };
-    }
 }
 
 export default Order;
