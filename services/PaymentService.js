@@ -37,8 +37,7 @@ class PaymentService {
                 order.orderId,
                 userId,
                 paymentDetails.cardNumber,
-                product.price * order.quantity,
-                "confirmed"
+                product.price * order.quantity
             );
 
             const paymentRef = doc(this.paymentCollection, paymentId);
