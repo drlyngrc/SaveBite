@@ -8,7 +8,9 @@
 3. [Key Features](#-key-features)  
 4. [Technologies Used](#-technologies-used)  
 5. [Challenges and Solutions](#-challenges-and-solutions)  
-6. [Acknowledgment](#-acknowledgment)  
+6. [Acknowledgment](#-acknowledgment)
+7. [Contributors](#-contributors)
+8. [Links](#-links)
 
 </details>  
 
