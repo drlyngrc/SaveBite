@@ -2,12 +2,13 @@ import OrderService from "./OrderService.js";
 import ProductService from "./productService.js";
 import Payment from "../models/Payment.js";
 import { v4 as uuidv4 } from "uuid";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 class PaymentService {
     constructor() {
         this.orderService = new OrderService();
         this.productService = new ProductService();
+        this.paymentCollection = collection(db, "payments");
     }
 
     async processPayments(userId, orders, paymentDetails) {
@@ -40,15 +41,8 @@ class PaymentService {
                 "confirmed"
             );
 
-            const paymentRef = doc(db, "payments", paymentId);
-            await setDoc(paymentRef, {
-                paymentId,
-                orderId: order.orderId,
-                userId,
-                cardNumber: paymentDetails.cardNumber,
-                amount: product.price * order.quantity,
-                status: "confirmed"
-            });
+            const paymentRef = doc(this.paymentCollection, paymentId);
+            await setDoc(paymentRef, { ...paymentConfirmation });
 
             await this.updateProductStock(order.productId, product.quantity - order.quantity);
             await this.orderService.deleteOrder(order.orderId);
