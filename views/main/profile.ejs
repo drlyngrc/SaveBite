@@ -1,87 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile | SaveBite</title>
 
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/static/css/profile/view-profile.css">
-</head>
-<body>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/profile/view-profile.css" />
+  </head>
+  <body>
     <div class="content-wrapper">
-        <div class="side-nav">
-            <%- include('../partials/side-nav') %>
-        </div>
-        <div class="main-content">
-            <div class="profile-header">
-            <!-- grid -->
-                <div class="header-left">
-                    <div class="profile-container">
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img" id="profile-pic">
-                        <div class="edit-overlay action-button" onclick="document.getElementById('file-input').click();">
-                            <i class='bx bx-edit-alt'></i>
-                        </div>
-                        <input type="file" id="file-input" accept="image/*" onchange="uploadImage(event)">
-                    </div>
-                </div>
-                <div class="header-right">
-                    <div class="user-name">Vladimir Jocson</div>
-                    <div class="contact-details">
-                        <div class="detail-set">
-                            <div class="detail-label">Role</div>
-                            <div class="detail-field">Seller</div>
-                        </div>
-                        <div class="detail-set">
-                            <div class="detail-label">Phone Number</div>
-                            <div class="detail-field">(+63) 930 1234 123</div>
-                        </div>
-                        <div class="detail-set">
-                            <div class="detail-label">Email Address</div>
-                            <div class="detail-field">123@gmail.com</div>
-                        </div>
-                    </div>
-                </div>
+      <div class="side-nav"><%- include('../partials/side-nav') %></div>
+      <div class="main-content">
+        <div class="profile-header">
+          <!-- grid -->
+          <div class="header-left">
+            <div class="profile-container">
+              <img
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                alt="Profile Picture"
+                class="profile-img"
+                id="profile-pic"
+              />
+              <div
+                class="edit-overlay action-button"
+                onclick="document.getElementById('file-input').click();"
+              >
+                <i class="bx bx-edit-alt"></i>
+              </div>
+              <input
+                type="file"
+                id="file-input"
+                accept="image/*"
+                onchange="uploadImage(event)"
+              />
             </div>
-            <div class="profile-body">
-                <div class="shipping-address">
-                    <div class="field-set">
-                        <div class="field-label">Shipping Address</div>
-                        <div class="editable-field">
-                            <input class="text-field" type="text" name="shipping-address" id="shipping-address" value="Current shipping address" disabled>
-                            <div class="edit-action action-button" onclick="enableEdit()">
-                                <i class='bx bx-edit-alt'></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="actions">
-                    <button class="solid-button">Save Changes</button>
-                    <button class="hollow-button">Discard Changes</button>
-                </div>
+          </div>
+          <div class="header-right">
+            <div class="user-name">Vladimir Jocson</div>
+            <div class="contact-details">
+              <div class="detail-set">
+                <div class="detail-label">Role</div>
+                <div class="detail-field">Seller</div>
+              </div>
+              <div class="detail-set">
+                <div class="detail-label">Phone Number</div>
+                <div class="detail-field">(+63) 930 1234 123</div>
+              </div>
+              <div class="detail-set">
+                <div class="detail-label">Email Address</div>
+                <div class="detail-field">123@gmail.com</div>
+              </div>
             </div>
+          </div>
         </div>
-
-
+        <div class="profile-body">
+          <div class="shipping-address">
+            <div class="field-set">
+              <div class="field-label">Shipping Address</div>
+              <div class="editable-field">
+                <input
+                  class="text-field"
+                  type="text"
+                  name="shipping-address"
+                  id="shipping-address"
+                  value="Current shipping address"
+                  disabled
+                />
+                <div class="edit-action action-button" onclick="enableEdit()">
+                  <i class="bx bx-edit-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="solid-button">Save Changes</button>
+            <button class="hollow-button">Discard Changes</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
-        function enableEdit() {
-            const inputField = document.getElementById('shipping-address');
-            inputField.disabled = false;
-            inputField.focus();
-            inputField.select();
-        }
+      function enableEdit() {
+        const inputField = document.getElementById("shipping-address");
+        inputField.disabled = false;
+        inputField.focus();
+        inputField.select();
+      }
 
-        function uploadImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profile-pic').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+      function uploadImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("profile-pic").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
         }
+      }
     </script>
-</body>
+  </body>
 </html>
