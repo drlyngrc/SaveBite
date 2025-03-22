@@ -19,25 +19,6 @@ class UserService {
         return userSnapshot.data();
     }
 
-    async addFunds(userId, amount) {
-        if (!userId) throw new Error("User ID is required.");
-        if (amount <= 0) throw new Error("Invalid amount.");
-
-        const userRef = doc(this.usersCollection, userId);
-        const userSnapshot = await getDoc(userRef);
-
-        if (!userSnapshot.exists()) {
-            throw new Error("User not found.");
-        }
-
-        const userData = userSnapshot.data();
-        const newBalance = (userData.balance || 0) + amount; 
-
-        await updateDoc(userRef, { balance: newBalance });
-
-        return `Added ₱${amount} to balance. Current Balance: ₱${newBalance}`;
-    }
-
     async updateProfile(userId, updateName, updateEmail, updatePassword, updateContact) {
         if (!userId) throw new Error("User ID is required.");
 

@@ -5,7 +5,6 @@ class User {
         this.email = email;
         this.password = password;
         this.contact = contact;
-        this.balance = 0;
         this.createAt = new Date().toISOString();
     }
 }
