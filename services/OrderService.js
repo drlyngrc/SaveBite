@@ -1,3 +1,4 @@
+import { db } from "../config/firebase.js";
 import ProductService from "./productService.js";
 import Order from "../models/Order.js";
 import { collection, doc, setDoc, getDocs, deleteDoc, query, where } from "firebase/firestore";
@@ -17,7 +18,7 @@ class OrderService extends ProductService {
             throw new Error("Product not found");
         }
 
-        if (product.quantity < quantity) {
+        if (parseInt(product.quantity, 10) < parseInt(quantity, 10)) {
             throw new Error("Not enough stock to fulfill the order");
         }
 
@@ -27,7 +28,7 @@ class OrderService extends ProductService {
         orderData.status = "ordered";
 
         const orderRef = doc(this.ordersCollection, orderId);
-        await setDoc(orderRef, orderData);
+        await setDoc(orderRef, { ...orderData });
 
         return { message: "Order placed successfully", order: orderData };
     }

@@ -1,5 +1,5 @@
+import { db } from "../config/firebase.js";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import db from "../config/firebase.js";
 
 class UserService {
     constructor() {

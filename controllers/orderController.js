@@ -4,8 +4,8 @@ const orderService = new OrderService();
 
 export const addOrder = async (req, res) => {
     try {
-        const { id: productId } = req.params;
-        const { quantity } = req.body;
+        const { productId, quantity } = req.body;
+        
         const userId = req.session.userId;
 
         if (!userId) {

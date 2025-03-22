@@ -18,7 +18,7 @@
             </div>
             <div class="order-body">
                 <div class="item-view">
-                    <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
+                    <img class="product-thumbnail" width="200" height="200" src="<%= product.image %>" alt="<%= product.name %>">
                 </div>
                 <div class="order-detail-view">
                     <div class="order-detail-card">
@@ -28,7 +28,6 @@
                                 <div class="product-title"><%= product.name %></div>
                                 <div class="product-price">₱<%= product.price %></div>
                                 <div class="description-text">Quantity: <%= product.quantity %></div>
-                                <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
                             </div>
                         </div>
                         <div class="description-detail">
@@ -38,15 +37,46 @@
                         <hr class="line-spacer">
                         <div class="actions">
                             <% if (currentUserId != product.userId) { %>
-                                <button class="solid-button">Add to Cart</button>
+                                <form action="" id="add-order">
+                                    <input type="number" id="product-quanity" placeholder="How many stock you want?">
+                                    <input type="text" style="display: none;" id="product-id" value="<%= product.productId %>">
+                                    <input type="submit" class="solid-button" value="Add to Cart"></input>
+                                </form>
                             <% } %>
                         </div>
+                        
+                        <p id="message" class="auth-message">Message</p>
                     </div>
                 </div>
             </div>
+            
         </div>
-
-
     </div>
+
+    <script>
+        document.getElementById("add-order").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const productId = document.getElementById("product-id").value;
+            const quantity = document.getElementById("product-quanity").value;
+            
+            try {
+              const response = await fetch("/api/product/add-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, quantity })
+              });
+
+              const result = await response.json();
+
+              message.style.display = "block";
+              message.style.color = response.ok ? "green" : "red";
+              message.textContent = response.ok ? result.message : result.error;
+            } catch (e) {
+              message.style.color = "red";
+              message.textContent = e.message;
+            }
+      });
+    </script>
 </body>
 </html>
