@@ -1,54 +1,70 @@
 import OrderService from "./OrderService.js";
 import ProductService from "./productService.js";
 import Payment from "../models/Payment.js";
-import { v4 as uuidv4 } from 'uuid';
-import { doc, setDoc } from "firebase/firestore"; // Ensure Firestore import for updateProductStock
+import { v4 as uuidv4 } from "uuid";
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 
 class PaymentService {
     constructor() {
         this.orderService = new OrderService();
         this.productService = new ProductService();
+        this.paymentCollection = collection(db, "payments");
     }
 
-    async processPayment(userId, productId, quantity, paymentDetails) {
+    async processPayments(userId, orders, paymentDetails) {
+        if (!orders || !Array.isArray(orders) || orders.length === 0) {
+            throw new Error("No orders selected for payment");
+        }
+
         if (!paymentDetails || !paymentDetails.cardNumber || !paymentDetails.expiryDate) {
             throw new Error("Invalid payment details provided");
         }
 
-        const product = await this.productService.getProductById(productId);
-        if (!product || product.quantity < quantity) {
-            throw new Error("Insufficient stock or product not found");
+        let totalAmount = 0;
+        let paymentResults = [];
+
+        for (const order of orders) {
+            const product = await this.productService.getProductById(order.productId);
+            if (!product || product.quantity < order.quantity) {
+                throw new Error(`Insufficient stock for product: ${product ? product.name : "unknown"}`);
+            }
+
+            totalAmount += product.price * order.quantity;
+
+            const paymentId = uuidv4();
+            const paymentConfirmation = new Payment(
+                paymentId,
+                order.orderId,
+                userId,
+                paymentDetails.cardNumber,
+                product.price * order.quantity
+            );
+
+            const paymentRef = doc(this.paymentCollection, paymentId);
+            await setDoc(paymentRef, { ...paymentConfirmation });
+
+            await this.updateProductStock(order.productId, product.quantity - order.quantity);
+            await this.orderService.deleteOrder(order.orderId);
+
+            paymentResults.push(paymentConfirmation);
         }
 
-        const totalPrice = product.price * quantity;
-
-        const order = await this.orderService.addOrder(userId, productId, quantity, new Date());
-        if (!order || !order.order || !order.order.orderId) {
-            throw new Error("Failed to create order");
-        }
-
-        const paymentId = uuidv4();
-
-        // Add checking if the user's balance is enough
-
-        const paymentConfirmation = new Payment(
-            paymentId,
-            order.order.orderId,
-            userId,
-            paymentDetails.cardNumber,
-            totalPrice,
-            "confirmed"
-        );
-
-        await this.updateProductStock(productId, product.quantity - quantity);
-
-        return paymentConfirmation;
+        return { totalAmount, paymentResults };
     }
 
     async updateProductStock(productId, newQuantity) {
         const updatedData = { quantity: newQuantity };
         const productRef = doc(db, "products", productId);
         await setDoc(productRef, updatedData, { merge: true });
+    }
+
+    async getAllPayments() {
+        const snapshot = await getDocs(this.paymentCollection);
+        const payments = [];
+        snapshot.forEach((doc) => {
+            payments.push({ id: doc.id, ...doc.data() });
+        });
+        return payments;
     }
 }
 
