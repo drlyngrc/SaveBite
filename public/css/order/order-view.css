@@ -1,6 +1,5 @@
 @import "../global.css";
 
-
 .content-wrapper {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -187,4 +186,9 @@
   max-width: 100%;
   border-radius: 8px;
   margin-top: 10px;
+}
+
+.order-item-action {
+  background-color: white;
+  border: none;
 }

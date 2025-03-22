@@ -61,7 +61,7 @@
             const quantity = document.getElementById("product-quanity").value;
             
             try {
-              const response = await fetch("/api/product/add-order", {
+              const response = await fetch("/api/order/add-order", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ productId, quantity })

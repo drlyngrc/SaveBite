@@ -27,120 +27,52 @@
                         </div>
                         <div class="order-detail-body">
                             <div class="order-item-listview">
-                                <div class="order-item">
-                                    <div class="order-item-left">
-                                        <div class="order-item-thumbnail">
-                                            thumbnail
-                                        </div>
-                                        <div class="order-item-details">
-                                            <div class="order-item-details-top">
-                                                <div class="order-category">
-                                                    Category
+                                <% const userOrders = orders.filter(order => userId === order.buyerId); %>
+                                <% userOrders.forEach(order => { %>
+                                    <div class="order-item">
+                                        <div class="order-item-left">
+                                            <div class="order-item-thumbnail">
+                                                <img src="<%= order.product.image %>" width="100" height="100" alt="<%= order.product.name %>" class="product-thumbnail">
+                                            </div>
+                                            <div class="order-item-details">
+                                                <div class="order-item-details-top">
+                                                    <div class="order-category">
+                                                        <%= order.product.category %>
+                                                    </div>
+                                                    <div class="order-item-name">
+                                                        <%= order.product.name %>
+                                                    </div>
                                                 </div>
-                                                <div class="order-item-name">
-                                                    Item name
+                                                <div class="order-item-details-bottom">
+                                                    <div class="order-additional-details">
+                                                        Quantity: <%= order.quantity %> | Price: ₱<%= parseFloat(order.product.price).toFixed(2) %>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="order-item-details-bottom">
-                                                <div class="order-additional-details">
-                                                    Additional Details | Go Here
-                                                </div>
+                                        </div>
+                                        <div class="order-item-right">
+                                            <div class="order-item-breakdown">
+                                                <%= order.quantity %> x ₱<%= parseFloat(order.product.price).toFixed(2) %>
                                             </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="order-item-right">
-                                        <div class="order-item-breakdown">
-                                            3 x ₱1,000.00
-                                        </div>
-                                        <div class="order-item-price-spacer">
-                                            |
-                                        </div>
-                                        <div class="order-item-total-price">
-                                            ₱3,000.00
-                                        </div>
-                                        <div class="order-item-action action-button">
-                                            <i class='bx bx-trash'></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order-item">
-                                    <div class="order-item-left">
-                                        <div class="order-item-thumbnail">
-                                            thumbnail
-                                        </div>
-                                        <div class="order-item-details">
-                                            <div class="order-item-details-top">
-                                                <div class="order-category">
-                                                    Category
-                                                </div>
-                                                <div class="order-item-name">
-                                                    Item name
-                                                </div>
+                                            <div class="order-item-price-spacer">
+                                                |
                                             </div>
-                                            <div class="order-item-details-bottom">
-                                                <div class="order-additional-details">
-                                                    Additional Details | Go Here
-                                                </div>
+                                            <div class="order-item-total-price">
+                                                ₱<%= order.totalAmount.toFixed(2) %>
                                             </div>
-
+                                            <form id="delete-order-<%= order.orderId %>" class="delete-order-form">
+                                                <input type="hidden" name="orderId" value="<%= order.orderId %>">
+                                                <button type="submit" class="order-item-action action-button">
+                                                    <i class='bx bx-trash'></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div class="order-item-right">
-                                        <div class="order-item-breakdown">
-                                            3 x ₱1,000.00
-                                        </div>
-                                        <div class="order-item-price-spacer">
-                                            |
-                                        </div>
-                                        <div class="order-item-total-price">
-                                            ₱3,000.00
-                                        </div>
-                                        <div class="order-item-action action-button">
-                                            <i class='bx bx-trash'></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order-item">
-                                    <div class="order-item-left">
-                                        <div class="order-item-thumbnail">
-                                            thumbnail
-                                        </div>
-                                        <div class="order-item-details">
-                                            <div class="order-item-details-top">
-                                                <div class="order-category">
-                                                    Category
-                                                </div>
-                                                <div class="order-item-name">
-                                                    Item name
-                                                </div>
-                                            </div>
-                                            <div class="order-item-details-bottom">
-                                                <div class="order-additional-details">
-                                                    Additional Details | Go Here
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="order-item-right">
-                                        <div class="order-item-breakdown">
-                                            3 x ₱1,000.00
-                                        </div>
-                                        <div class="order-item-price-spacer">
-                                            |
-                                        </div>
-                                        <div class="order-item-total-price">
-                                            ₱3,000.00
-                                        </div>
-                                        <div class="order-item-action action-button">
-                                            <i class='bx bx-trash'></i>
-                                        </div>
-                                    </div>
-                                </div>
+                                <% }) %>
                             </div>
                         </div>
                     </div>
+
                     <div class="order-detail-card">
                         <div class="order-detail-header">
                             <div class="card-title">Order Summary</div>
@@ -149,8 +81,10 @@
                             <div class="order-summary-detail-list-view">
                                 <div class="order-summary-detail-list-item">
                                     <div class="order-summary-detail-name">Subtotal</div>
-                                    <div class="order-summary-detail-additional">9 items</div>
-                                    <div class="order-summary-detail-price">₱9,000.00</div>
+                                    <div class="order-summary-detail-additional"><%= userOrders.length %> items</div>
+                                    <div class="order-summary-detail-price">
+                                        ₱<%= userOrders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2) %>
+                                    </div>
                                 </div>
                                 <div class="order-summary-detail-list-item">
                                     <div class="order-summary-detail-name">Shipping Fee</div>
@@ -160,7 +94,9 @@
                                 <div class="order-summary-detail-list-item">
                                     <div class="order-summary-detail-name order-total-title">Total</div>
                                     <div class="order-summary-detail-additional"></div>
-                                    <div class="order-summary-detail-price order-total-price">₱8,100.00</div>
+                                    <div class="order-summary-detail-price order-total-price">
+                                        ₱<%= (userOrders.reduce((sum, order) => sum + order.totalAmount, 0) + 100).toFixed(2) %>
+                                    </div>
                                 </div>
                             </div>
                             <hr class="line-spacer">
@@ -175,13 +111,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="order-detail-view">
                     <div class="order-detail-card">
                         <div class="order-detail-header">
                             <div class="order-detail-card-title">
                                 <div class="card-title">Contact Information</div>
                                 <div class="edit-details action-button">
-                                    <i class='bx bx-edit-alt' ></i>
+                                    <i class='bx bx-edit-alt'></i>
                                 </div>
                             </div>
                         </div>
@@ -192,12 +129,13 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="order-detail-card">
                         <div class="order-detail-header">
                             <div class="order-detail-card-title">
                                 <div class="card-title">Shipping Address</div>
                                 <div class="edit-details action-button">
-                                    <i class='bx bx-edit-alt' ></i>
+                                    <i class='bx bx-edit-alt'></i>
                                 </div>
                             </div>
                         </div>
@@ -213,8 +151,60 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".order-item-listview").addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                if (event.target.classList.contains("delete-order-form")) {
+                    const form = event.target;
+                    const orderId = form.querySelector("input[name='orderId']").value;
+
+                    try {
+                        const response = await fetch("/api/order/delete-order", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ orderId })
+                        });
+
+                        const result = await response.json();
+                        const message = document.createElement("div");
+                        message.style.color = response.ok ? "green" : "red";
+                        message.textContent = response.ok ? result.message : result.error;
+                        form.parentElement.appendChild(message);
+
+                        if (response.ok) {
+                            form.closest(".order-item").remove();
+                            updateOrderSummary();
+                        }
+                    } catch (error) {
+                        console.error("Error deleting order:", error.message);
+                    }
+                }
+            });
+
+            function updateOrderSummary() {
+                const remainingOrders = document.querySelectorAll(".order-item");
+                const subtotalElement = document.querySelector(".order-summary-detail-price");
+                const totalElement = document.querySelector(".order-total-price");
+                const itemCountElement = document.querySelector(".order-summary-detail-additional");
+
+                let subtotal = 0;
+                remainingOrders.forEach(order => {
+                    const totalPriceElement = order.querySelector(".order-item-total-price");
+                    subtotal += parseFloat(totalPriceElement.textContent.replace("₱", ""));
+                });
+
+                const shippingFee = 100;
+                const total = subtotal + shippingFee;
+
+                subtotalElement.textContent = `₱${subtotal.toFixed(2)}`;
+                totalElement.textContent = `₱${total.toFixed(2)}`;
+                itemCountElement.textContent = `${remainingOrders.length} items`;
+            }
+        });
+    </script>
 </body>
 </html>

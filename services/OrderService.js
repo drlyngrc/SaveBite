@@ -36,7 +36,16 @@ class OrderService extends ProductService {
     async getAllOrders() {
         const q = query(this.ordersCollection, where("status", "==", "ordered"));
         const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+        const ordersWithProducts = await Promise.all(
+            querySnapshot.docs.map(async (doc) => {
+                const orderData = { id: doc.id, ...doc.data() };
+                const productDetails = await this.getProductById(orderData.productId);
+                return { ...orderData, product: productDetails };
+            })
+        );
+    
+        return ordersWithProducts;
     }
 
     async cancelOrders(orderIds) {

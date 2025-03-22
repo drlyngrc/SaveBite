@@ -25,9 +25,11 @@ export const addOrder = async (req, res) => {
 };
 
 export const getAllOrders = async (req, res) => {
+    const userId = req.session.userId;
+
     try {
         const orders = await orderService.getAllOrders();
-        res.render("orders/order-listing.ejs", { orders });
+        res.render("order/order.ejs", { orders, userId });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -43,6 +45,22 @@ export const cancelOrders = async (req, res) => {
 
         const result = await orderService.cancelOrders(orderIds);
         res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const deleteOrder = async (req, res) => {
+    try {
+        console.log("Deleting order");
+        const { orderId } = req.body;
+
+        if (!orderId) {
+            return res.status(400).json({ error: "Order ID is missing" });
+        }
+
+        await orderService.deleteOrder(orderId);
+        res.status(200).json({ message: `Order with ID ${orderId} has been deleted.` });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
