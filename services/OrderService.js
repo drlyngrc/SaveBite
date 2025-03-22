@@ -1,4 +1,5 @@
-import ProductService from "./productService.js"; // Import the base class
+import ProductService from "./productService.js";
+import Order from "../models/Order.js";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,28 +21,24 @@ class OrderService extends ProductService {
             throw new Error("Not enough stock to fulfill the order");
         }
 
-        const orderData = {
-            orderId,
-            userId,
-            productId,
-            productName: product.name,
-            quantity,
-            totalPrice: product.price * quantity,
-            orderDate
-        };
+        const totalAmount = product.price * quantity;
+
+        const orderData = new Order(orderId, userId, productId, product.name, quantity, totalAmount);
+        orderData.orderDate = orderDate;
 
         const orderRef = doc(this.ordersCollection, orderId);
         await setDoc(orderRef, orderData);
 
-        await this.updateProductStock(productId, product.quantity - quantity);
-
         return { message: "Order placed successfully", order: orderData };
     }
 
-    async updateProductStock(productId, newQuantity) {
-        const updatedData = { quantity: newQuantity };
-        const productRef = doc(db, "products", productId);
-        await setDoc(productRef, updatedData, { merge: true });
+    async cancelOrders() {
+        // Cancel single or multiple orders
+        // Delete the order request permanently
+    }
+
+    async getAllOrders() {
+        // Display all orders with status = 'ordered'
     }
 }
 

@@ -1,5 +1,5 @@
 import { db } from "../config/firebase.js";
-import { collection, addDoc, setDoc, getDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, setDoc, getDoc, getDocs, doc } from "firebase/firestore";
 import Product from "../models/Product.js";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,17 +26,11 @@ class ProductService {
         const querySnapshot = await getDocs(this.productsCollection);
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
-
-/*     async updateProduct(productId, updatedData) {
-        const productRef = doc(db, "products", productId);
-        await updateDoc(productRef, updatedData);
-        return { id: productId, ...updatedData };
-    }
     
     async deleteProduct(productId) {
         await deleteDoc(doc(db, "products", productId));
         return { message: "Product deleted successfully", id: productId };
-    } */
+    }
 }
 
 export default ProductService;

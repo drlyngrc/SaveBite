@@ -1,11 +1,12 @@
 class Order {
-    constructor(orderId, buyerId, sellerId, totalAmount, orderStatus, foodItemsId = []) {
+    constructor(orderId, buyerId, productId, name, quantity, totalAmount) {
         this.orderId = orderId;
         this.buyerId = buyerId;
-        this.sellerId = sellerId;
+        this.productId = productId;
+        this.name = name;
+        this.quantity = quantity;
         this.totalAmount = totalAmount;
-        this.orderStatus = orderStatus;
-        this.foodItemsId = foodItemsId;
+        this.orderStatus = "ordered";
     }
 }
 
