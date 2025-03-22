@@ -1,7 +1,6 @@
 import { db } from "../config/firebase.js";
 import OrderService from "./OrderService.js";
 import ProductService from "./productService.js";
-import Payment from "../models/Payment.js";
 import { v4 as uuidv4 } from "uuid";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 
@@ -12,17 +11,13 @@ class PaymentService {
         this.paymentCollection = collection(db, "payments");
     }
 
-    async processPayments(userId, orders, paymentDetails) {
+    async processOrders(userId, orders) {
         if (!orders || !Array.isArray(orders) || orders.length === 0) {
-            throw new Error("No orders selected for payment");
-        }
-
-        if (!paymentDetails || !paymentDetails.cardNumber || !paymentDetails.expiryDate) {
-            throw new Error("Invalid payment details provided");
+            throw new Error("No orders selected for confirmation.");
         }
 
         let totalAmount = 0;
-        let paymentResults = [];
+        let orderResults = [];
 
         for (const order of orders) {
             const product = await this.productService.getProductById(order.productId);
@@ -32,25 +27,17 @@ class PaymentService {
 
             totalAmount += product.price * order.quantity;
 
-            const paymentId = uuidv4();
-            const paymentConfirmation = new Payment(
-                paymentId,
-                order.orderId,
-                userId,
-                paymentDetails.cardNumber,
-                product.price * order.quantity
-            );
-
-            const paymentRef = doc(this.paymentCollection, paymentId);
-            await setDoc(paymentRef, { ...paymentConfirmation });
-
             await this.updateProductStock(order.productId, product.quantity - order.quantity);
             await this.orderService.deleteOrder(order.orderId);
 
-            paymentResults.push(paymentConfirmation);
+            orderResults.push({
+                orderId: order.orderId,
+                productId: order.productId,
+                totalAmount: product.price * order.quantity,
+            });
         }
 
-        return { totalAmount, paymentResults };
+        return { totalAmount, orderResults };
     }
 
     async updateProductStock(productId, newQuantity) {

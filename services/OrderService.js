@@ -60,9 +60,7 @@ class OrderService extends ProductService {
         try {
             const orderRef = doc(this.ordersCollection, orderId);
             await deleteDoc(orderRef);
-            console.log(`Order with ID ${orderId} has been deleted.`);
         } catch (error) {
-            console.error("Error deleting order:", error);
             throw new Error("Failed to delete order.");
         }
     }
