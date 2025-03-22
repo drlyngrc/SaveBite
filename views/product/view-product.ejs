@@ -37,8 +37,9 @@
                         </div>
                         <hr class="line-spacer">
                         <div class="actions">
-                            <button class="solid-button">Add to Cart</button>
-                            <button class="hollow-button">Buy Now</button>
+                            <% if (currentUserId != product.userId) { %>
+                                <button class="solid-button">Add to Cart</button>
+                            <% } %>
                         </div>
                     </div>
                 </div>

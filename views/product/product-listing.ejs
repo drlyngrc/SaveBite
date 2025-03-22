@@ -49,24 +49,26 @@
                 </div>
                 <div class="product-grid">
                   <% products.forEach(product => { %>
-                    <div class="product-square">
-                      <div class="product-top">
-                        <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
+                    <% if (currentUserId == product.userId) { %>
+                      <div class="product-square">
+                        <div class="product-top">
+                          <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
+                        </div>
+                        <div class="product-bottom">
+                          <div class="product-title">
+                            <%= product.name %>
+                          </div>
+                          <div class="product-price">
+                            ₱<%= product.price %>.00
+                          </div>
+                          <input type="text" style="display: none;" value="<%= product.category %>">
+                          <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
+                          <div class="product-quantity">
+                            Quantity: <%= product.quantity %>
+                          </div>
+                        </div>
                       </div>
-                      <div class="product-bottom">
-                        <div class="product-title">
-                          <%= product.name %>
-                        </div>
-                        <div class="product-price">
-                          ₱<%= product.price %>.00
-                        </div>
-                        <input type="text" style="display: none;" value="<%= product.category %>">
-                        <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
-                        <div class="product-quantity">
-                          Quantity: <%= product.quantity %>
-                        </div>
-                      </div>
-                    </div>
+                    <% } %>
                   <% }) %>
                 </div>
             </div>
