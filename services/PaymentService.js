@@ -2,7 +2,7 @@ import OrderService from "./OrderService.js";
 import ProductService from "./productService.js";
 import Payment from "../models/Payment.js";
 import { v4 as uuidv4 } from "uuid";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 
 class PaymentService {
     constructor() {
@@ -56,6 +56,15 @@ class PaymentService {
         const updatedData = { quantity: newQuantity };
         const productRef = doc(db, "products", productId);
         await setDoc(productRef, updatedData, { merge: true });
+    }
+
+    async getAllPayments() {
+        const snapshot = await getDocs(this.paymentCollection);
+        const payments = [];
+        snapshot.forEach((doc) => {
+            payments.push({ id: doc.id, ...doc.data() });
+        });
+        return payments;
     }
 }
 

@@ -30,3 +30,15 @@ export const processPayments = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getAllPayments = async (req, res) => {
+    try {
+        const payments = await paymentService.getAllPayments();
+        res.status(200).json({
+            message: "Payments retrieved successfully.",
+            payments,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
