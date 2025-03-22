@@ -1,26 +1,16 @@
-class FoodItem {
-    constructor(foodId, name, category, price, quantity, expiryDate, sellerId) {
-        this.foodId = foodId;
+class Product {
+    constructor(productId, userId, name, description, category, quantity, price, expiryDate, image) {
+        this.productId = productId;
+        this.userId = userId;
         this.name = name;
+        this.description = description;
         this.category = category;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price;
         this.expiryDate = expiryDate;
-        this.sellerId = sellerId;
-    }
-
-    updateStock(quantity) {
-        if (quantity >= 0) {
-            this.quantity = quantity;
-            return true;
-        }``
-        return false;
-    }
-
-    isExpired() {
-        const currentDate = new Date();
-        return currentDate > this.expiryDate;
+        this.image = image;
+        this.createdAt = new Date().toISOString();
     }
 }
 
-export default FoodItem;
+export default Product;

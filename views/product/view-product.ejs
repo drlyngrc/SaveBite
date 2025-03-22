@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveBite</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/product/view-product.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="side-nav">
+            <%- include('../partials/side-nav') %>
+        </div>
+        <div class="main-content">
+            <div class="order-header">
+            </div>
+            <div class="order-body">
+                <div class="item-view">
+                    <img class="product-thumbnail" width="200" height="200" src="<%= product.image %>" alt="<%= product.name %>">
+                </div>
+                <div class="order-detail-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="product-detail">
+                                <div class="product-category"><%= product.category %></div>
+                                <div class="product-title"><%= product.name %></div>
+                                <div class="product-price">₱<%= product.price %></div>
+                                <div class="description-text">Quantity: <%= product.quantity %></div>
+                            </div>
+                        </div>
+                        <div class="description-detail">
+                            <div class="description-label">Description</div>
+                            <div class="description-text"><%= product.description %></div>
+                        </div>
+                        <hr class="line-spacer">
+                        <div class="actions">
+                            <% if (currentUserId != product.userId) { %>
+                                <form action="" id="add-order">
+                                    <input type="number" id="product-quanity" placeholder="How many stock you want?">
+                                    <input type="text" style="display: none;" id="product-id" value="<%= product.productId %>">
+                                    <input type="submit" class="solid-button" value="Add to Cart"></input>
+                                </form>
+                            <% } %>
+                        </div>
+                        
+                        <p id="message" class="auth-message">Message</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("add-order").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const productId = document.getElementById("product-id").value;
+            const quantity = document.getElementById("product-quanity").value;
+            
+            try {
+              const response = await fetch("/api/order/add-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, quantity })
+              });
+
+              const result = await response.json();
+
+              message.style.display = "block";
+              message.style.color = response.ok ? "green" : "red";
+              message.textContent = response.ok ? result.message : result.error;
+            } catch (e) {
+              message.style.color = "red";
+              message.textContent = e.message;
+            }
+      });
+    </script>
+</body>
+</html>

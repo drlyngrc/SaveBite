@@ -1,0 +1,166 @@
+@import "../global.css";
+
+
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 2rem;
+}
+
+.profile-header {
+  display: flex;
+  column-gap: 9rem;
+}
+
+.header-left {
+  display: flex;
+  width: 100px;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.user-name {
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: row;
+  column-gap: 4rem;
+}
+
+.detail-set {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  font-size: 1.1rem;
+  color: var(--body-font-color);
+}
+
+.detail-field {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+
+.field-set {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 0.9rem;
+  color: var(--body-font-color);
+}
+
+.text-field {
+  font-family: 'Manrope', sans-serif;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  background-color: var(--solid-gray-bg-color);
+  border-color: var(--pale-outline-color);
+  margin: 0;
+}
+
+.profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.editable-field {
+  display: flex;
+  align-items: center;
+  width: 600px;
+}
+
+.editable-field i {
+  transform: translateX(-35px);
+
+}
+.actions {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.detail-card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--pale-outline-color);
+  border-radius: 3px;
+}
+
+.card-title {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.2rem;
+}
+
+.profile-container {
+  position: relative;
+  width: 200px;
+  box-sizing: border-box;
+  height: 200px;
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0px solid transparent; 
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.edit-overlay i {
+  color: white;
+  font-size: 2rem;
+}
+
+.profile-container:hover .edit-overlay {
+  opacity: 1;
+}
+
+#file-input {
+  display: none;
+}

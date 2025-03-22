@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | SaveBite</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/product/add-product.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="side-nav">
+          <%- include('../partials/side-nav') %>
+        </div>
+        <div class="main-content">
+            <div class="order-header">
+                <div class="order-id">
+                    <span class="order-id-title">Add Product</span>
+                </div>
+            </div>
+            <form id="add-product" class="order-body">
+                <div class="order-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                          <div class="card-title">General Information</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Name</div>
+                            <input class="text-field" type="text" name="product-name" id="product-name" placeholder="Enter product name" required>
+                          </div>
+                          <div class="field-set">
+                            <div class="field-label">Description</div>
+                            <textarea class="text-field-area" id="product-description" maxlength="255" rows="5" cols="40" placeholder="Enter description (max 255 characters)" required></textarea>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="card-title">Pricing</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Exact Price (₱)</div>
+                            <input class="text-field" type="text" name="product-price" id="product-price" placeholder="Enter price for the item" required>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="card-title">Inventory</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="inventory-split">
+                            <div class="field-set">
+                              <div class="field-label">Quantity</div>
+                              <input class="text-field" type="number" name="product-quantity" id="product-quantity" placeholder="Enter the quantity" required>
+                            </div>
+                            <div class="field-set">
+                              <div class="field-label">Expiry Date</div>
+                              <input class="text-field" type="date" name="product-expirty" id="product-expiry" required>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-detail-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="order-detail-card-title">
+                              <div class="card-title">Product Media</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Photos</div>
+                              <div class="image-upload-container">
+                                <div class="image-list">
+                                </div>
+                                <label for="product-image" class="solid-button">
+                                    Add Image
+                                </label>
+                                <input type="file" id="product-image" name="product-image" accept="image/*" required>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                            <div class="order-detail-card-title">
+                                <div class="card-title">Category</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Product Category</div>
+                            <select name="product-category" id="product-category" class="dropdown-select" required>
+                              <option value="Fruits">Fruits</option>
+                              <option value="Vegetables">Vegetables</option>
+                              <option value="Grains">Grains & Cereals</option>
+                              <option value="Legumes">Legumes & Beans</option>
+                              <option value="Dairy">Dairy Products</option>
+                              <option value="Meat">Meat & Poultry</option>
+                              <option value="Seafood">Seafood</option>
+                              <option value="Eggs">Eggs</option>
+                              <option value="Nuts">Nuts & Seeds</option>
+                            </select>
+                          </div>
+                        </div>
+                        <input type="submit" value="Submit" style="width: 100%;" class="primary-button">
+                        <p id="message" class="auth-message">Message</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+      document.getElementById("product-image").addEventListener("change", function (event) {
+          const imageList = document.querySelector(".image-list");
+          imageList.innerHTML = ""; // Clear any previously displayed image
+          const file = event.target.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.alt = "Product Image Preview";
+                img.style.maxWidth = "100%";
+                img.style.borderRadius = "8px";
+
+                imageList.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          }
+      });
+      
+      function toBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+      }
+
+      document.getElementById("add-product").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const name = document.getElementById("product-name").value;
+            const description = document.getElementById("product-description").value;
+            const category = document.getElementById("product-category").value;
+            const quantity = document.getElementById("product-quantity").value;
+            const price = document.getElementById("product-price").value;
+            const expiry = document.getElementById("product-expiry").value;
+            const image = document.getElementById("product-image");
+
+            let base64Image = "";
+            if (image.files[0]) {
+                base64Image = await toBase64(image.files[0]);
+            }
+
+            try {
+              const response = await fetch("/api/product/add-product", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name,
+                  description,
+                  category,
+                  quantity,
+                  price,
+                  expiry,
+                  image: base64Image,
+                }),
+              });
+
+              const result = await response.json();
+
+              message.style.display = "block";
+              message.style.color = response.ok ? "green" : "red";
+              message.textContent = response.ok ? result.message : result.error;
+            } catch (e) {
+              message.style.color = "red";
+              message.textContent = e.message;
+            }
+      });
+    </script>
+</body>
+</html>

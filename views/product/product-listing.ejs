@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing | SaveBite</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/product/product-listing.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="side-nav">
+          <%- include('../partials/side-nav') %>
+        </div>
+        <div class="main-content">
+            <div class="order-header">
+                <div class="order-id">
+                    <span class="order-id-title">Product Listing</span>
+                </div>
+                <div class="search-bar">
+                  <i class='bx bx-search action-button'></i>
+                  <input class="search-bar-field text-field" type="text" name="search-query" placeholder="Search for a product...">
+                </div>
+            </div>
+            <div class="order-body">
+                <div class="order-view">
+                    <div class="order-detail-card">
+                        <div class="order-detail-header">
+                          <div class="card-title">Category</div>
+                        </div>
+                        <div class="order-detail-body">
+                          <div class="field-set">
+                            <div class="field-label">Filter by categories</div>
+                            <div class="category-list">
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="fruits"> Fruits</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="vegetables"> Vegetables</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="grains"> Grains & Cereals</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="legumes"> Legumes & Beans</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="dairy"> Dairy Products</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="meat"> Meat & Poultry</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="seafood"> Seafood</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="eggs"> Eggs</label>
+                              <label class="checkbox-label"><input class="checkbox-tick" type="checkbox" value="nuts"> Nuts & Seeds</label>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-grid">
+                  <% products.forEach(product => { %>
+                    <% if (currentUserId != product.userId) { %>
+                      <div class="product-square">
+                        <div class="product-top">
+                          <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
+                        </div>
+                        <div class="product-bottom">
+                          <div class="product-title">
+                            <%= product.name %>
+                          </div>
+                          <div class="product-price">
+                            ₱<%= product.price %>.00
+                          </div>
+                          <input type="text" style="display: none;" value="<%= product.category %>">
+                          <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
+                          <div class="product-quantity">
+                            Quantity: <%= product.quantity %>
+                          </div>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      const searchInput = document.querySelector(".search-bar-field");
+      const checkboxes = document.querySelectorAll(".checkbox-tick");
+      const productSquares = document.querySelectorAll(".product-square");
+
+      searchInput.addEventListener("input", function () {
+        filterProducts();
+      });
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+          filterProducts();
+        });
+      });
+
+      function filterProducts() {
+        const keyword = searchInput.value.toLowerCase();
+        const selectedCategories = Array.from(checkboxes)
+          .filter(checkbox => checkbox.checked)
+          .map(checkbox => checkbox.value);
+
+        productSquares.forEach(productSquare => {
+          const productTitle = productSquare.querySelector(".product-title").innerText.toLowerCase();
+          const productCategory = productSquare.querySelector("input[type='text']").value.toLowerCase();
+
+          const matchesKeyword = productTitle.includes(keyword);
+          const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(productCategory);
+
+          if (matchesKeyword && matchesCategory) {
+            productSquare.style.display = "block";
+          } else {
+            productSquare.style.display = "none";
+          }
+        });
+      }
+
+      productSquares.forEach(productSquare => {
+        productSquare.addEventListener("click", async () => {
+          const productId = productSquare.querySelector("input:nth-of-type(2)").value;
+
+          window.location.href = `/product/view/${productId}`;
+        });
+      });
+    </script>
+</body>
+</html>

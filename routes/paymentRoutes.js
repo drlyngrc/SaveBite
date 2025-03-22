@@ -1,8 +1,11 @@
 import express from 'express';
-const router = express.Router();
+import { processPayments } from "../controllers/paymentController.js"
+import UserService from "../services/UserService.js";
 
-router.get("/payment", (req, res) => {
-    res.render("main/payment.ejs");
-});
+const router = express.Router();
+const userService = new UserService();
+
+// router.get("/order/history", userService.checkAuth.bind(userService), getAllOrders);
+router.post("/api/payment/process-payment", userService.checkAuth.bind(userService), processPayments);
 
 export default router;
