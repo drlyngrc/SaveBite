@@ -1,21 +1,21 @@
 import express from "express";
 import { addProduct, getProductById, getAllProducts } from "../controllers/productController.js";
+import UserService  from "../services/UserService.js";
 
 const router = express.Router();
+const userService = new UserService();
 
-router.get("/product/:id", getProductById);
-router.get("/product", getAllProducts);
-
-router.get("/add-product", (req, res) => {
+router.get("/add-product", userService.checkAuth.bind(userService), (req, res) => {
   res.render("product/add-product.ejs");
 });
 
-router.get("/product/view/:id", getProductById);
-
-router.get("/product-listing", (req, res) => {
+router.get("/product-listing", userService.checkAuth.bind(userService), (req, res) => {
   res.render("product/product-listing.ejs");
 });
 
-router.post("/api/product/add-product", addProduct);
+router.get("/product/:id", getProductById);
+router.get("/product", getAllProducts);
+router.get("/product/view/:id", getProductById);
+router.post("/api/product/add-product", userService.checkAuth.bind(userService), addProduct);
 
 export default router;

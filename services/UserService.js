@@ -57,6 +57,27 @@ class UserService {
 
         return "User profile updated successfully.";
     }
+
+    async checkAuth(req, res, next) {
+        try {
+            if (!req.session.userId) {
+                return res.redirect("/login");
+            }
+            
+            const userId = req.session.userId;
+            const userRef = doc(this.usersCollection, userId);
+            const userSnapshot = await getDoc(userRef);
+
+            if (!userSnapshot.exists()) {
+                return res.redirect("/login");
+            }
+
+            next();
+        } catch (error) {
+            console.error("Authentication error:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    }
 }
 
 export default UserService;
