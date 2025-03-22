@@ -30,6 +30,10 @@
                                 <% const userOrders = orders.filter(order => userId === order.buyerId); %>
                                 <% userOrders.forEach(order => { %>
                                     <div class="order-item">
+                                        <input type="hidden" class="order-id-input" value="<%= order.orderId %>">
+                                        <input type="hidden" class="product-id-input" value="<%= order.product.id %>">
+                                        <input type="hidden" class="quantity-input" value="<%= order.quantity %>">
+                                        
                                         <div class="order-item-left">
                                             <div class="order-item-thumbnail">
                                                 <img src="<%= order.product.image %>" width="100" height="100" alt="<%= order.product.name %>" class="product-thumbnail">
@@ -104,9 +108,12 @@
                                 <div class="order-reminder">
                                     Please review your order before confirming purchase
                                 </div>
-                                <button class="order-confirm-button solid-button">
-                                    Confirm Purchase
-                                </button>
+                                <form id="payment-form">
+                                    <button type="submit" class="order-confirm-button solid-button">
+                                        Confirm Purchase
+                                    </button>
+                                </form>
+                                <p id="message" class="auth-message">Message</p>
                             </div>
                         </div>
                     </div>
@@ -155,6 +162,47 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("payment-form").addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const orders = Array.from(document.querySelectorAll(".order-item")).map(order => {
+                    return {
+                        orderId: order.querySelector(".order-id-input").value,
+                        productId: order.querySelector(".product-id-input").value,
+                        quantity: parseInt(order.querySelector(".quantity-input").value),
+                    };
+                }).filter(order => order.orderId && order.productId);
+
+                if (orders.length === 0) {
+                    console.warn("No valid orders to process.");
+                    return;
+                }
+
+                console.log("Submitting payment request:", orders);
+
+                try {
+                    const response = await fetch("/api/payment/process-payment", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ orders })
+                    });
+
+                    const result = await response.json();
+                    const message = document.getElementById("message");
+
+                    if (response.ok) {
+                        message.textContent = result.message;
+                        message.style.color = "green";
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        message.textContent = result.message || "Error confirming payment.";
+                        message.style.color = "red";
+                    }
+                } catch (error) {
+                    console.error("Payment processing error:", error);
+                }
+            });
+
             document.querySelector(".order-item-listview").addEventListener("submit", async (event) => {
                 event.preventDefault();
 

@@ -52,7 +52,6 @@ export const cancelOrders = async (req, res) => {
 
 export const deleteOrder = async (req, res) => {
     try {
-        console.log("Deleting order");
         const { orderId } = req.body;
 
         if (!orderId) {
