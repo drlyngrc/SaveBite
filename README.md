@@ -32,17 +32,17 @@
 
 ## 🌟 Key Features
 
-|                                | **Description**                                       |
-|--------------------------------|-------------------------------------------------------|
-| **👤 User Profiles**           | Buyers and sellers can create profiles, track transactions, and list food items.                       |
-| **🛒 Sell**                    | Users can list nearly expiring or excess food items with detailed descriptions and pricing.            |
-| **📥 Purchase & Cart System**  | Buyers can browse listings, add items to their cart, and proceed to checkout.                          |
-| **💳 Payment**                  | The system supports secure payment processing, ensuring efficient and reliable payment confirmation.  |
+|                                  | **Description**                                       |
+|----------------------------------|-------------------------------------------------------|
+| **👤 User Profiles**             | Buyers and sellers can create profiles, track transactions, and list food items.                       |
+| **🛒 Sell**                      | Users can list nearly expiring or excess food items with detailed descriptions and pricing.            |
+| **📥 Purchase & Cart System**    | Buyers can browse listings, add items to their cart, and proceed to checkout.                          |
+| **💳 Payment**                   | The system supports secure payment processing, ensuring efficient and reliable payment confirmation.  |
 
 
 ## 🏗️ Technologies Used:
 
-- **Languages:** JavaScript  
+- **Prograaming Languages:** JavaScript  
 - **Frameworks:** Node.js, Express.js, Firebase  
 - **Tools:** GitHub for version control, Postman for API testing  
 
@@ -66,8 +66,8 @@ We extend our heartfelt gratitude to everyone who contributed to the development
 
 ## 🔗 Links
 
-- 📄 [**Final Report**](#)  
-- 📊 [**Presentation Slides**](#)  
+- 📄 [**Final Report**](https://drive.google.com/drive/folders/10cJKTRSxtf0WmvoDfAJ6_sTzDXI2BbiZ?usp=drive_link)  
+- 📊 [**Presentation Slides**](https://drive.google.com/drive/folders/1_YjOWWk--Vfl6-XTC1ZK2mG30cMYKSYt?usp=drive_link) 
 - 📐 [**UML Diagrams**](#)  
 - 💻 [**GitHub Repository**](https://github.com/drlyngrc/SaveBite)  
 
