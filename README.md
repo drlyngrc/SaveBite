@@ -34,12 +34,10 @@
 
 |                                | **Description**                                       |
 |--------------------------------|-------------------------------------------------------|
-| **👤 User Profiles**             | Personalized profiles for buyers and sellers.          |
-| **🛒 Sell**                     | List surplus or expiring food items.                   |
-| **📥 Purchase**                 | Browse and buy affordable food items.                  |
-| **➕ Add to Cart**               | Collect multiple items before checkout.                |
-| **💳 Payment**                  | Secure and smooth transaction process.                 |
-| **⏰ Food Expiry Alerts**        | Notifications for items nearing expiration.            |
+| **👤 User Profiles**           | Buyers and sellers can create profiles, track transactions, and list food items.                       |
+| **🛒 Sell**                    | Users can list nearly expiring or excess food items with detailed descriptions and pricing.            |
+| **📥 Purchase & Cart System**  | Buyers can browse listings, add items to their cart, and proceed to checkout.                          |
+| **💳 Payment**                  | The system supports secure payment processing, ensuring efficient and reliable payment confirmation.  |
 
 
 ## 🏗️ Technologies Used:
