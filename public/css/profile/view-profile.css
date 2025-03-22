@@ -4,13 +4,13 @@
 .content-wrapper {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  padding: 2rem;
 }
 
 .main-content {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+  padding: 2rem;
 }
 
 .profile-header {
