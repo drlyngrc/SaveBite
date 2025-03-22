@@ -30,20 +30,28 @@ class PaymentService {
 
             totalAmount += product.price * order.quantity;
 
-            const placedOrder = await this.orderService.addOrder(userId, order.productId, order.quantity, new Date());
-            
             const paymentId = uuidv4();
             const paymentConfirmation = new Payment(
                 paymentId,
-                placedOrder.order.orderId,
+                order.orderId,
                 userId,
                 paymentDetails.cardNumber,
                 product.price * order.quantity,
                 "confirmed"
             );
 
+            const paymentRef = doc(db, "payments", paymentId);
+            await setDoc(paymentRef, {
+                paymentId,
+                orderId: order.orderId,
+                userId,
+                cardNumber: paymentDetails.cardNumber,
+                amount: product.price * order.quantity,
+                status: "confirmed"
+            });
+
             await this.updateProductStock(order.productId, product.quantity - order.quantity);
-            await this.orderService.deleteOrder(placedOrder.order.orderId);
+            await this.orderService.deleteOrder(order.orderId);
 
             paymentResults.push(paymentConfirmation);
         }
