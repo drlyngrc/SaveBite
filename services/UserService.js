@@ -2,63 +2,69 @@ import { db } from "../config/firebase.js";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
 class UserService {
-    constructor() {
-        this.usersCollection = collection(db, "users");
+  constructor() {
+    this.usersCollection = collection(db, "users");
+  }
+
+  async displayUserProfile(userId) {
+    if (!userId) throw new Error("User ID is required.");
+
+    const userRef = doc(this.usersCollection, userId);
+    const userSnapshot = await getDoc(userRef);
+
+    if (!userSnapshot.exists()) {
+      throw new Error("User not found.");
     }
 
-    async displayUserProfile(userId) {
-        if (!userId) throw new Error("User ID is required.");
+    return userSnapshot.data();
+  }
 
-        const userRef = doc(this.usersCollection, userId);
-        const userSnapshot = await getDoc(userRef);
+  async updateProfile(
+    userId,
+    updateName,
+    updateEmail,
+    updatePassword,
+    updateContact,
+  ) {
+    if (!userId) throw new Error("User ID is required.");
 
-        if (!userSnapshot.exists()) {
-            throw new Error("User not found.");
-        }
+    const userRef = doc(this.usersCollection, userId);
+    const updateData = {};
 
-        return userSnapshot.data();
+    if (updateName) updateData.name = updateName;
+    if (updateEmail) updateData.email = updateEmail;
+    if (updatePassword) updateData.password = updatePassword;
+    if (updateContact) updateData.contact = updateContact;
+
+    if (Object.keys(updateData).length === 0) {
+      throw new Error("No profile information provided to update.");
     }
 
-    async updateProfile(userId, updateName, updateEmail, updatePassword, updateContact) {
-        if (!userId) throw new Error("User ID is required.");
+    await updateDoc(userRef, updateData);
 
-        const userRef = doc(this.usersCollection, userId);
-        const updateData = {};
+    return "User profile updated successfully.";
+  }
 
-        if (updateName) updateData.name = updateName;
-        if (updateEmail) updateData.email = updateEmail;
-        if (updatePassword) updateData.password = updatePassword;
-        if (updateContact) updateData.contact = updateContact;
+  async checkAuth(req, res, next) {
+    try {
+      if (!req.session.userId) {
+        return res.redirect("/login");
+      }
 
-        if (Object.keys(updateData).length === 0) {
-            throw new Error("No profile information provided to update.");
-        }
+      const userId = req.session.userId;
+      const userRef = doc(this.usersCollection, userId);
+      const userSnapshot = await getDoc(userRef);
 
-        await updateDoc(userRef, updateData);
+      if (!userSnapshot.exists()) {
+        return res.redirect("/login");
+      }
 
-        return "User profile updated successfully.";
+      next();
+    } catch (error) {
+      console.error("Authentication error:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-    async checkAuth(req, res, next) {
-        try {
-            if (!req.session.userId) {
-                return res.redirect("/login");
-            }
-            
-            const userId = req.session.userId;
-            const userRef = doc(this.usersCollection, userId);
-            const userSnapshot = await getDoc(userRef);
-
-            if (!userSnapshot.exists()) {
-                return res.redirect("/login");
-            }
-
-            next();
-        } catch (error) {
-            console.error("Authentication error:", error);
-            res.status(500).send("Internal Server Error");
-        }
-    }
+  }
 }
 
 export default UserService;

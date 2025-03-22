@@ -1,6 +1,5 @@
 @import "../global.css";
 
-
 .content-wrapper {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -20,7 +19,8 @@
   column-gap: 5rem;
 }
 
-.order-detail-view, .order-view {
+.order-detail-view,
+.order-view {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
@@ -102,7 +102,8 @@
 
 .order-category {
   font-weight: 400;
-  font-size: 0.9rem;  row-gap: 0.5rem;
+  font-size: 0.9rem;
+  row-gap: 0.5rem;
 
   color: var(--body-font-color);
 }
