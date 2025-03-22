@@ -62,7 +62,7 @@ We extend our heartfelt gratitude to everyone who contributed to the development
 
 | ![Eluxe](https://github.com/baddddddddd.png) | ![Darlyne](https://github.com/drlyngrc.png) | ![James](https://github.com/ratatatatcode.png) | ![Paul](https://github.com/par-paulreyes.png) |
 |:-------------------------------------------:|:------------------------------------------:|:--------------------------------------------:|:------------------------------------------:|
-| **[Jocson, Vladimir M.](https://github.com/baddddddddd)** <br> *Eluxe* | **[Lalongisip, Darlyne Grace M.](https://github.com/drlyngrc)** <br> *Darlyne* | **[Magnaye, James Michael D.](https://github.com/ratatatatcode)** <br> *James* | **[Reyes, Paul Alexis J.](https://github.com/par-paulreyes)** <br> *Paul* |
+| **[Jocson, Vladimir M.](https://github.com/baddddddddd)** <br> *Eluxe* | **[Lalongisip, Darlyne M.](https://github.com/drlyngrc)** <br> *Darlyne* | **[Magnaye, James D.](https://github.com/ratatatatcode)** <br> *James* | **[Reyes, Paul Alexis J.](https://github.com/par-paulreyes)** <br> *Paul* |
 
 ## 🔗 Links
 
