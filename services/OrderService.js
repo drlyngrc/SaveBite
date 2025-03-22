@@ -1,6 +1,6 @@
 import ProductService from "./productService.js";
 import Order from "../models/Order.js";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, deleteDoc, query, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
 class OrderService extends ProductService {
@@ -11,8 +11,8 @@ class OrderService extends ProductService {
 
     async addOrder(userId, productId, quantity, orderDate) {
         const orderId = uuidv4();
-
         const product = await this.getProductById(productId);
+
         if (!product) {
             throw new Error("Product not found");
         }
@@ -22,9 +22,9 @@ class OrderService extends ProductService {
         }
 
         const totalAmount = product.price * quantity;
-
         const orderData = new Order(orderId, userId, productId, product.name, quantity, totalAmount);
         orderData.orderDate = orderDate;
+        orderData.status = "ordered";
 
         const orderRef = doc(this.ordersCollection, orderId);
         await setDoc(orderRef, orderData);
@@ -32,13 +32,29 @@ class OrderService extends ProductService {
         return { message: "Order placed successfully", order: orderData };
     }
 
-    async cancelOrders() {
-        // Cancel single or multiple orders
-        // Delete the order request permanently
+    async getAllOrders() {
+        const q = query(this.ordersCollection, where("status", "==", "ordered"));
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
 
-    async getAllOrders() {
-        // Display all orders with status = 'ordered'
+    async cancelOrders(orderIds) {
+        for (const orderId of orderIds) {
+            const orderDocRef = doc(this.ordersCollection, orderId);
+            await deleteDoc(orderDocRef);
+        }
+        return { message: "Selected orders have been deleted" };
+    }
+
+    async deleteOrder(orderId) {
+        try {
+            const orderRef = doc(this.ordersCollection, orderId);
+            await deleteDoc(orderRef);
+            console.log(`Order with ID ${orderId} has been deleted.`);
+        } catch (error) {
+            console.error("Error deleting order:", error);
+            throw new Error("Failed to delete order.");
+        }
     }
 }
 
