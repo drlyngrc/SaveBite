@@ -1,12 +1,13 @@
 class Payment {
-    constructor(paymentId, orderId, buyerId, paymentMethod, amount) {
+    constructor(paymentId, orderId, buyerId, totalAmount, createdAt, orderCount) {
         this.paymentId = paymentId;
         this.orderId = orderId;
         this.buyerId = buyerId;
-        this.paymentMethod = paymentMethod;
-        this.amount = amount;
         this.paymentStatus = "Completed";
-        this.deliveryStatus = "Processing"
+        this.deliveryStatus = "Processing";
+        this.totalAmount = totalAmount;
+        this.createdAt = createdAt;
+        this.orderCount = orderCount;
     }
 }
 

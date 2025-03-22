@@ -1,6 +1,7 @@
 import { db } from "../config/firebase.js";
 import OrderService from "./OrderService.js";
 import ProductService from "./productService.js";
+import Payment from "../models/Payment.js";
 import { v4 as uuidv4 } from "uuid";
 import { collection, doc, setDoc, writeBatch, getDoc, getDocs } from "firebase/firestore";
 
@@ -69,15 +70,16 @@ class PaymentService {
                 orderResults.push({ orderId: order.orderId, productId: order.productId, totalAmount: orderAmount });
             }
 
-            const paymentData = {
+            const paymentData = new Payment(
                 paymentId,
-                buyerId: userId,
+                null,
+                userId,
                 totalAmount,
-                createdAt: new Date().toISOString(),
-                orderCount: orders.length,
-            };
-
-            batch.set(paymentDocRef, paymentData);
+                new Date().toISOString(),
+                orders.length
+            );
+            
+            batch.set(paymentDocRef, { ...paymentData });
 
             await batch.commit();
             console.log("Firestore transaction committed successfully.");
