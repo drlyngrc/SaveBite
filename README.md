@@ -3,53 +3,56 @@
 <details>
   <summary><strong>📖 Table of Contents</strong></summary>
 
-1. [Introduction](#introduction)
-2. [Sustainable Development Goals (SDGs)](#-sustainable-development-goals-sdgs)
-3. [Key Features](#-key-features)
-4. [Technologies Used](#-technologies-used)
-5. [Challenges and Solutions](#-challenges-and-solutions)
+1. [Introduction](#introduction)  
+2. [Sustainable Development Goals (SDGs)](#-sustainable-development-goals-sdgs)   
+3. [Key Features](#-key-features)  
+4. [Technologies Used](#-technologies-used)  
+5. [Challenges and Solutions](#-challenges-and-solutions)  
 6. [Acknowledgment](#-acknowledgment)
 7. [Contributors](#-contributors)
 8. [Links](#-links)
 
-</details>
+</details>  
 
 ## 📌 Introduction
 
-**SaveBite** is an online marketplace that connects sellers with surplus or nearly-expiring food to buyers seeking affordable options. It reduces food waste and improves accessibility by making the buying and selling process simple and efficient.
+**SaveBite** is an online marketplace that connects sellers with surplus or nearly-expiring food to buyers seeking affordable options. It reduces food waste and improves accessibility by making the buying and selling process simple and efficient.  
 
 ## 🌍 Sustainable Development Goals (SDGs)
 
 > **🛡️ SDG 1: No Poverty**  
-> Provides affordable food options for low-income families.
+> Provides affordable food options for low-income families.  
 
 > **🥦 SDG 2: Zero Hunger**  
-> Reduces food insecurity by improving access to nutritious food.
+> Reduces food insecurity by improving access to nutritious food.  
 
 > **♻️ SDG 12: Responsible Consumption and Production**  
 > Promotes sustainable consumption by minimizing food waste.
 
+
 ## 🌟 Key Features
 
-|                               | **Description**                                                                                      |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **👤 User Profiles**          | Buyers and sellers can create profiles, track transactions, and list food items.                     |
-| **🛒 Sell**                   | Users can list nearly expiring or excess food items with detailed descriptions and pricing.          |
-| **📥 Purchase & Cart System** | Buyers can browse listings, add items to their cart, and proceed to checkout.                        |
-| **💳 Payment**                | The system supports secure payment processing, ensuring efficient and reliable payment confirmation. |
+|                                  | **Description**                                       |
+|----------------------------------|-------------------------------------------------------|
+| **👤 User Profiles**             | Buyers and sellers can create profiles, track transactions, and list food items.                       |
+| **🛒 Sell**                      | Users can list nearly expiring or excess food items with detailed descriptions and pricing.            |
+| **📥 Purchase & Cart System**    | Buyers can browse listings, add items to their cart, and proceed to checkout.                          |
+| **💳 Payment**                   | The system supports secure payment processing, ensuring efficient and reliable payment confirmation.  |
+
 
 ## 🏗️ Technologies Used:
 
-- **Prograaming Languages:** JavaScript
-- **Frameworks:** Node.js, Express.js, Firebase
-- **Tools:** GitHub for version control, Postman for API testing
+- **Programming Languages:** JavaScript  
+- **Frameworks:** Node.js, Express.js
+- **Tools:** GitHub for version control, Postman for API testing  
 
 ## 🛠️ Challenges and Solutions
 
-- **UML Accuracy:** Required multiple revisions to align with system functionality.
-- **Tight Deadlines:** Managed time by delegating tasks and having regular check-ins.
-- **Code Complexity:** Used incremental development and pair programming to ease integration.
-- **Team Coordination:** Improved communication to handle differing schedules.
+- **UML Accuracy:** Required multiple revisions to align with system functionality.  
+- **Tight Deadlines:** Managed time by delegating tasks and having regular check-ins.  
+- **Code Complexity:** Used incremental development and pair programming to ease integration.  
+- **Team Coordination:** Improved communication to handle differing schedules.  
+
 
 ## 🙏 Acknowledgment
 
@@ -57,13 +60,13 @@ We extend our heartfelt gratitude to everyone who contributed to the development
 
 ## 👥 Contributors
 
-|              ![Eluxe](https://github.com/baddddddddd.png)              |               ![Darlyne](https://github.com/drlyngrc.png)                |             ![James](https://github.com/ratatatatcode.png)             |               ![Paul](https://github.com/par-paulreyes.png)               |
-| :--------------------------------------------------------------------: | :----------------------------------------------------------------------: | :--------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
-| **[Jocson, Vladimir M.](https://github.com/baddddddddd)** <br> _Eluxe_ | **[Lalongisip, Darlyne M.](https://github.com/drlyngrc)** <br> _Darlyne_ | **[Magnaye, James D.](https://github.com/ratatatatcode)** <br> _James_ | **[Reyes, Paul Alexis J.](https://github.com/par-paulreyes)** <br> _Paul_ |
+| ![Eluxe](https://github.com/baddddddddd.png) | ![Darlyne](https://github.com/drlyngrc.png) | ![James](https://github.com/ratatatatcode.png) | ![Paul](https://github.com/par-paulreyes.png) |
+|:-------------------------------------------:|:------------------------------------------:|:--------------------------------------------:|:------------------------------------------:|
+| **[Jocson, Vladimir M.](https://github.com/baddddddddd)** <br> *Eluxe* | **[Lalongisip, Darlyne M.](https://github.com/drlyngrc)** <br> *Darlyne* | **[Magnaye, James D.](https://github.com/ratatatatcode)** <br> *James* | **[Reyes, Paul Alexis J.](https://github.com/par-paulreyes)** <br> *Paul* |
 
 ## 🔗 Links
 
-- 📄 [**Final Report**](https://drive.google.com/drive/folders/10cJKTRSxtf0WmvoDfAJ6_sTzDXI2BbiZ?usp=drive_link)
-- 📊 [**Presentation Slides**](https://drive.google.com/drive/folders/1_YjOWWk--Vfl6-XTC1ZK2mG30cMYKSYt?usp=drive_link)
-- 📐 [**UML Diagrams**](#)
-- 💻 [**GitHub Repository**](https://github.com/drlyngrc/SaveBite)
+- 📄 [**Final Report**](https://drive.google.com/drive/folders/10cJKTRSxtf0WmvoDfAJ6_sTzDXI2BbiZ?usp=drive_link)  
+- 📊 [**Presentation Slides**](https://drive.google.com/drive/folders/1_YjOWWk--Vfl6-XTC1ZK2mG30cMYKSYt?usp=drive_link) 
+- 📐 [**UML Diagrams**](#)  
+- 💻 [**GitHub Repository**](https://github.com/drlyngrc/SaveBite)  
