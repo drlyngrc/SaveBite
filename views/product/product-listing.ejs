@@ -58,14 +58,14 @@
                           <div class="product-title">
                             <%= product.name %>
                           </div>
+                          <div class="product-quantity">
+                            Stock: <%= product.quantity %>
+                          </div>
                           <div class="product-price">
                             ₱<%= product.price %>.00
                           </div>
                           <input type="text" style="display: none;" value="<%= product.category %>">
                           <input type="text" style="display: none;" id="product.id" value="<%= product.productId %>">
-                          <div class="product-quantity">
-                            Quantity: <%= product.quantity %>
-                          </div>
                         </div>
                       </div>
                     <% } %>
