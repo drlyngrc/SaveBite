@@ -29,7 +29,7 @@ export const getAllOrders = async (req, res) => {
 
     try {
         const orders = await orderService.getAllOrders();
-        res.render("order/order.ejs", { orders, userId });
+        res.render("order/order.ejs", { orders, userId, currentRoute: '/order' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

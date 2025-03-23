@@ -43,7 +43,7 @@ export const getAllProducts = async (req, res) => {
         const products = await productService.getAllProducts();
         const currentUserId = req.session.userId;
 
-        res.render("product/product-listing.ejs", { products, currentUserId });
+        res.render("product/product-listing.ejs", { products, currentUserId, currentRoute: '/product' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
