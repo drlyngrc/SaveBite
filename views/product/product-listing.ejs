@@ -52,6 +52,7 @@
                     <% if (currentUserId != product.userId) { %>
                       <div class="product-square">
                         <div class="product-top">
+                          <div class="product-category"><%= product.category %></div>
                           <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
                         </div>
                         <div class="product-bottom">
