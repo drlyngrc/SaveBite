@@ -6,7 +6,9 @@ export const displayProfile = async (req, res) => {
   try {
     const userId = req.session.userId;
     const userProfile = await userService.displayUserProfile(userId);
-    res.status(200).json(userProfile);
+    const { name, contact, email } = userProfile;
+    res.render("main/profile.ejs", { currentRoute: '/profile', name, contact, email });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -40,25 +40,53 @@
             </div>
           </div>
           <div class="header-right">
-            <div class="user-name">Vladimir Jocson</div>
+            <div class="user-name"><%= locals.name %></div>
             <div class="contact-details">
               <div class="detail-set">
-                <div class="detail-label">Role</div>
-                <div class="detail-field">Seller</div>
-              </div>
-              <div class="detail-set">
                 <div class="detail-label">Phone Number</div>
-                <div class="detail-field">(+63) 930 1234 123</div>
+                <div class="detail-field"><%= locals.contact %></div>
               </div>
               <div class="detail-set">
                 <div class="detail-label">Email Address</div>
-                <div class="detail-field">123@gmail.com</div>
+                <div class="detail-field"><%= locals.email %></div>
               </div>
             </div>
           </div>
         </div>
         <div class="profile-body">
-          <div class="shipping-address">
+          <div class="information">
+            <div class="field-set">
+              <div class="field-label">Phone Number</div>
+              <div class="editable-field">
+                <input
+                  class="text-field"
+                  type="text"
+                  name="phone-number"
+                  id="phone-number"
+                  value="<%= locals.contact %>"
+                  disabled
+                />
+                <div class="edit-action action-button" onclick="enableEdit('phone-number')">
+                  <i class="bx bx-edit-alt"></i>
+                </div>
+              </div>
+            </div>
+            <div class="field-set">
+              <div class="field-label">Email Address</div>
+              <div class="editable-field">
+                <input
+                  class="text-field"
+                  type="text"
+                  name="email"
+                  id="email"
+                  value="<%= locals.email %>"
+                  disabled
+                />
+                <div class="edit-action action-button" onclick="enableEdit('email')">
+                  <i class="bx bx-edit-alt"></i>
+                </div>
+              </div>
+            </div>
             <div class="field-set">
               <div class="field-label">Shipping Address</div>
               <div class="editable-field">
@@ -70,7 +98,7 @@
                   value="Current shipping address"
                   disabled
                 />
-                <div class="edit-action action-button" onclick="enableEdit()">
+                <div class="edit-action action-button" onclick="enableEdit('shipping-address')">
                   <i class="bx bx-edit-alt"></i>
                 </div>
               </div>
@@ -84,8 +112,8 @@
       </div>
     </div>
     <script>
-      function enableEdit() {
-        const inputField = document.getElementById("shipping-address");
+      function enableEdit(id) {
+        const inputField = document.getElementById(id);
         inputField.disabled = false;
         inputField.focus();
         inputField.select();
