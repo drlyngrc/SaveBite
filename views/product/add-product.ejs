@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/css/product/add-product.css" />
+    <link rel="shortcut icon" href="static/icon-only.png" type="image/x-icon" />
   </head>
   <body>
     <div class="content-wrapper">
@@ -171,7 +172,7 @@
         .getElementById("product-image")
         .addEventListener("change", function (event) {
           const imageList = document.querySelector(".image-list");
-          imageList.innerHTML = ""; // Clear any previously displayed image
+          imageList.innerHTML = "";
           const file = event.target.files[0];
 
           if (file) {

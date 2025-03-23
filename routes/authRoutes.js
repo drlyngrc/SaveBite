@@ -3,7 +3,7 @@ import { login, signup, logout } from "../controllers/authControllers.js";
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
+router.get("/", (req, res) => {
   if (req.session.userId) return res.redirect("/add-product");
 
   res.render("auth/login.ejs");

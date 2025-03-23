@@ -6,10 +6,11 @@ import { v4 as uuidv4 } from "uuid";
 import {
   collection,
   doc,
-  setDoc,
+  query,
   writeBatch,
   getDoc,
   getDocs,
+  where,
 } from "firebase/firestore";
 
 class PaymentService {
@@ -73,6 +74,7 @@ class PaymentService {
           amount: orderAmount,
           productName: product.name,
           productCategory: product.category,
+          status: "Pending",
         };
 
         const orderDocRef = doc(
@@ -110,15 +112,95 @@ class PaymentService {
     return { paymentId, totalAmount, orderResults };
   }
 
-  async getAllPayments() {
-    const snapshot = await getDocs(this.paymentCollection);
-    const payments = [];
+  async getSalesHistory(userId) {
+    try {
+      const snapshot = await getDocs(this.paymentCollection);
+      const matchedOrders = [];
 
-    snapshot.forEach((doc) => {
-      payments.push({ id: doc.id, ...doc.data() });
-    });
+      for (const paymentDoc of snapshot.docs) {
+        const paymentData = paymentDoc.data();
+        const ordersRef = collection(paymentDoc.ref, "orders");
+        const ordersSnapshot = await getDocs(ordersRef);
 
-    return payments;
+        for (const orderDoc of ordersSnapshot.docs) {
+          const orderData = orderDoc.data();
+
+          const productRef = doc(db, "products", orderData.productId);
+          const productSnap = await getDoc(productRef);
+
+          if (!productSnap.exists()) {
+            console.warn(
+              `Product not found for productId: ${orderData.productId}`,
+            );
+            continue;
+          }
+
+          const productData = productSnap.data();
+
+          if (productData.userId === userId) {
+            matchedOrders.push({
+              paymentId: paymentDoc.id,
+              createdAt: paymentData.createdAt,
+              ...orderData,
+            });
+          }
+        }
+      }
+
+      return matchedOrders;
+    } catch (error) {
+      console.error("Error fetching sales history:", error);
+      throw new Error("Failed to fetch sales history.");
+    }
+  }
+
+  // async getUserPayments(userId) {
+  //   try {
+  //     const snapshot = await getDocs(this.paymentCollection);
+  //     const payments = [];
+
+  //     snapshot.forEach((doc) => {
+  //       const data = doc.data();
+  //       if (data.userId === userId) {
+  //         payments.push({ id: doc.id, ...data });
+  //       }
+  //     });
+
+  //     return payments;
+  //   } catch (error) {
+  //     console.error("Error fetching user payments:", error);
+  //     throw new Error("Failed to fetch user purchase history.");
+  //   }
+  // }
+
+  async getPurchaseHistory(userId) {
+    try {
+      const snapshot = await getDocs(this.paymentCollection);
+      const matchedOrders = [];
+
+      for (const paymentDoc of snapshot.docs) {
+        const paymentData = paymentDoc.data();
+        const ordersRef = collection(paymentDoc.ref, "orders");
+        const ordersSnapshot = await getDocs(ordersRef);
+
+        for (const orderDoc of ordersSnapshot.docs) {
+          const orderData = orderDoc.data();
+
+          if (paymentData.buyerId === userId) {
+            matchedOrders.push({
+              paymentId: paymentDoc.id,
+              createdAt: paymentData.createdAt,
+              ...orderData,
+            });
+          }
+        }
+      }
+
+      return matchedOrders;
+    } catch (error) {
+      console.error("Error fetching sales history:", error);
+      throw new Error("Failed to fetch sales history.");
+    }
   }
 }
 

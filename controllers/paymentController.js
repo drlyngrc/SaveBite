@@ -1,4 +1,13 @@
 import PaymentService from "../services/PaymentService.js";
+import { db } from "../config/firebase.js";
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 const paymentService = new PaymentService();
 
@@ -6,8 +15,6 @@ export const processPayments = async (req, res) => {
   try {
     const userId = req.session.userId;
     const { orders } = req.body;
-
-    console.log("Processing Payment Request:", { userId, orders });
 
     if (!userId) {
       return res
@@ -33,21 +40,44 @@ export const processPayments = async (req, res) => {
       orderResults,
     });
   } catch (error) {
-    console.error("Error in processPayments:", error);
     return res
       .status(500)
       .json({ message: "Error confirming order: " + error.message });
   }
 };
 
-export const getAllPayments = async (req, res) => {
+export const getSalesHistory = async (req, res) => {
   try {
-    const payments = await paymentService.getAllPayments();
-    return res
-      .status(200)
-      .json({ message: "Payments retrieved successfully.", payments });
+    const userId = req.session.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized. Please log in to view sales history.",
+      });
+    }
+
+    const matchedOrders = await paymentService.getSalesHistory(userId);
+    res.render("history/sales.ejs", { matchedOrders });
   } catch (error) {
-    console.error("Error fetching payments:", error);
-    return res.status(500).json({ message: error.message });
+    console.error("Error retrieving sales history:", error);
+    res.status(500).send("Failed to load sales history.");
+  }
+};
+
+export const getPurchaseHistory = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized. Please log in to view sales history.",
+      });
+    }
+
+    const matchedOrders = await paymentService.getPurchaseHistory(userId);
+    res.render("history/purchase.ejs", { matchedOrders });
+  } catch (error) {
+    console.error("Error retrieving sales history:", error);
+    res.status(500).send("Failed to load sales history.");
   }
 };

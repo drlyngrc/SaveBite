@@ -1,17 +1,25 @@
 import express from "express";
-import { processPayments } from "../controllers/paymentController.js";
+import {
+  processPayments,
+  getSalesHistory,
+  getPurchaseHistory,
+} from "../controllers/paymentController.js";
 import UserService from "../services/UserService.js";
 
 const router = express.Router();
 const userService = new UserService();
 
-router.get("/history/sales", userService.checkAuth.bind(userService), (req, res) => {
-  res.render("history/sales.ejs", { currentRoute: "/history/sales" });
-});
+router.get(
+  "/history/sales",
+  userService.checkAuth.bind(userService),
+  getSalesHistory,
+);
 
-router.get("/history/purchase", userService.checkAuth.bind(userService), (req, res) => {
-  res.render("history/purchase.ejs", { currentRoute: "/history/purchase" });
-});
+router.get(
+  "/history/purchase",
+  userService.checkAuth.bind(userService),
+  getPurchaseHistory,
+);
 
 router.post(
   "/api/payment/process-payment",

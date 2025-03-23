@@ -78,6 +78,6 @@ export const logout = (req, res) => {
       console.error("Logout error:", err);
       return res.status(500).json({ success: false, error: "Logout failed" });
     }
-    res.redirect("/login");
+    res.redirect("/");
   });
 };

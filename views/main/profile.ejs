@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/css/profile/view-profile.css" />
+    <link rel="shortcut icon" href="static/icon-only.png" type="image/x-icon" />
   </head>
   <body>
     <div class="content-wrapper">
@@ -53,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="profile-body">
+        <form class="profile-body" id="update-profile">
           <div class="information">
             <div class="field-set">
               <div class="field-label">Phone Number</div>
@@ -66,7 +67,10 @@
                   value="<%= locals.contact %>"
                   disabled
                 />
-                <div class="edit-action action-button" onclick="enableEdit('phone-number')">
+                <div
+                  class="edit-action action-button"
+                  onclick="enableEdit('phone-number')"
+                >
                   <i class="bx bx-edit-alt"></i>
                 </div>
               </div>
@@ -82,7 +86,10 @@
                   value="<%= locals.email %>"
                   disabled
                 />
-                <div class="edit-action action-button" onclick="enableEdit('email')">
+                <div
+                  class="edit-action action-button"
+                  onclick="enableEdit('email')"
+                >
                   <i class="bx bx-edit-alt"></i>
                 </div>
               </div>
@@ -95,20 +102,25 @@
                   type="text"
                   name="shipping-address"
                   id="shipping-address"
-                  value="Current shipping address"
+                  value="<%= locals.address %>"
+                  placeholder="Current shipping address"
                   disabled
                 />
-                <div class="edit-action action-button" onclick="enableEdit('shipping-address')">
+                <div
+                  class="edit-action action-button"
+                  onclick="enableEdit('shipping-address')"
+                >
                   <i class="bx bx-edit-alt"></i>
                 </div>
               </div>
             </div>
           </div>
           <div class="actions">
-            <button class="solid-button">Save Changes</button>
+            <button type="submit" class="solid-button">Save Changes</button>
             <button class="hollow-button">Discard Changes</button>
           </div>
-        </div>
+          <p id="message" class="auth-message">Message</p>
+        </form>
       </div>
     </div>
     <script>
@@ -129,6 +141,37 @@
           reader.readAsDataURL(file);
         }
       }
+
+      document
+        .getElementById("update-profile")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const contact = document.getElementById("phone-number").value;
+          const address = document.getElementById("shipping-address").value;
+
+          try {
+            const response = await fetch("/api/user/update-profile", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email,
+                contact,
+                address,
+              }),
+            });
+
+            const result = await response.json();
+
+            message.style.display = "block";
+            message.style.color = response.ok ? "green" : "red";
+            message.textContent = response.ok ? result.message : result.error;
+          } catch (e) {
+            message.style.color = "red";
+            message.textContent = e.message;
+          }
+        });
     </script>
   </body>
 </html>

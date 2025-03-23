@@ -27,10 +27,6 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  res.render("landing.ejs");
-});
-
 app.use("/", auth, user, product, orders, payment);
 
 const PORT = 3000;

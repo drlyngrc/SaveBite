@@ -1,6 +1,8 @@
 import OrderService from "../services/OrderService.js";
+import UserService from "../services/UserService.js";
 
 const orderService = new OrderService();
+const userService = new UserService();
 
 export const addOrder = async (req, res) => {
   try {
@@ -34,12 +36,18 @@ export const addOrder = async (req, res) => {
 export const getAllOrders = async (req, res) => {
   const userId = req.session.userId;
 
-    try {
-        const orders = await orderService.getAllOrders();
-        res.render("order/order.ejs", { orders, userId, currentRoute: '/order' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const userProfile = await userService.displayUserProfile(userId);
+    const orders = await orderService.getAllOrders();
+    res.render("order/order.ejs", {
+      orders,
+      userId,
+      currentRoute: "/order",
+      userProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 export const cancelOrders = async (req, res) => {

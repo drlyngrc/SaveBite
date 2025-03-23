@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SaveBite</title>
+    <title>View Orders | SaveBite</title>
 
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/css/order/order-view.css" />
+    <link rel="shortcut icon" href="static/icon-only.png" type="image/x-icon" />
   </head>
   <body>
     <div class="content-wrapper">
@@ -162,15 +163,13 @@
               <div class="order-detail-header">
                 <div class="order-detail-card-title">
                   <div class="card-title">Contact Information</div>
-                  <div class="edit-details action-button">
-                    <i class="bx bx-edit-alt"></i>
-                  </div>
+                  <div class="edit-details action-button"></div>
                 </div>
               </div>
               <div class="order-detail-body">
                 <div class="order-detail-card-list-item">
-                  <div class="card-list-item">0930 776 9827</div>
-                  <div class="card-list-item">123@gmail.com</div>
+                  <div class="card-list-item"><%= userProfile.contact %></div>
+                  <div class="card-list-item"><%= userProfile.email %></div>
                 </div>
               </div>
             </div>
@@ -179,17 +178,13 @@
               <div class="order-detail-header">
                 <div class="order-detail-card-title">
                   <div class="card-title">Shipping Address</div>
-                  <div class="edit-details action-button">
-                    <i class="bx bx-edit-alt"></i>
-                  </div>
+                  <div class="edit-details action-button"></div>
                 </div>
               </div>
               <div class="order-detail-body">
                 <div class="order-detail-card-list-item">
-                  <div class="card-list-item">Vladimir Jocson</div>
-                  <div class="card-list-item">House number</div>
-                  <div class="card-list-item">Street, Subd</div>
-                  <div class="card-list-item">City, Province</div>
+                  <div class="card-list-item"><%= userProfile.name %></div>
+                  <div class="card-list-item"><%= userProfile.address %></div>
                 </div>
               </div>
             </div>

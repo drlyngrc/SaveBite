@@ -206,7 +206,8 @@ table {
   border-collapse: collapse;
   border: 1px solid var(--pale-outline-color);
 }
-th, td {
+th,
+td {
   padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -223,10 +224,22 @@ th {
   text-align: center;
   width: 5rem;
 }
-.processing { background-color: #ffeeba; color: #856404; }
-.completed { background-color: #d4edda; color: #155724; }
-.pending { background-color: #f8d7da; color: #721c24; }
-.paid { background-color: #d1ecf1; color: #0c5460; }
+.processing {
+  background-color: #ffeeba;
+  color: #856404;
+}
+.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+.pending {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.paid {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
 .action-icons i {
   cursor: pointer;
   margin-left: 1rem;
