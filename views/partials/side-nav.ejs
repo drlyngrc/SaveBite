@@ -17,6 +17,14 @@
         <i class='action-button bx bx-cart'></i>
         <span>View Cart</span>
     </button>
+    <button class="nav-button <%= locals.currentRoute === '/history/sales' ? 'active' : '' %>" onclick="window.location.href='/history/sales'">
+        <i class='action-button bx bx-bar-chart'></i>
+        <span>Sales History</span>
+    </button>
+    <button class="nav-button <%= locals.currentRoute === '/history/purchase' ? 'active' : '' %>" onclick="window.location.href='/history/purchase'">
+      <i class='action-button bx bx-purchase-tag' ></i>
+      <span>Purchase History</span>
+    </button>
   </div>
 </div>
 <div class="nav-footer">

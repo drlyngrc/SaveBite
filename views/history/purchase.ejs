@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase History | SaveBite</title>
+
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/static/css/history/history.css" />
+</head>
+<body>
+  <div class="content-wrapper">
+    <div class="side-nav"><%- include('../partials/side-nav') %></div>
+    <div class="main-content">
+      <div class="order-header">
+        <div class="order-id">
+          <span class="order-id-title">Purchase History</span>
+        </div>
+      </div>
+      <div class="order-body">
+        <div class="purchase-history">
+            <div class="table-title">
+              Transactions
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Delivery</th>
+                        <th>Items</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="order-id">a5cdd3b8-ec98-44b6-9d61-4544a71bbc87</td>
+                        <td>11 Feb, 2024</td>
+                        <td>₱10000.00</td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td><span class="badge processing">Processing</span></td>
+                        <td>2 items</td>
+                        <td class="action-icons">
+                          <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                          <div class="dropdown">
+                            <a onclick="markAsCompleted(this)">Mark as Completed</a>
+                            <a onclick="viewOrder(this)">View Order</a>
+                          </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="order-id">a5cdd3b8-ec98-44b6-9d61-4544a71bbc87</td>
+                        <td>11 Feb, 2024</td>
+                        <td>₱10000.00</td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td><span class="badge processing">Processing</span></td>
+                        <td>2 items</td>
+                        <td class="action-icons">
+                          <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                          <div class="dropdown">
+                            <a onclick="markAsCompleted(this)">Mark as Completed</a>
+                            <a onclick="viewOrder(this)">View Order</a>
+                          </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="order-id">a5cdd3b8-ec98-44b6-9d61-4544a71bbc87</td>
+                        <td>11 Feb, 2024</td>
+                        <td>₱10000.00</td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td><span class="badge processing">Processing</span></td>
+                        <td>2 items</td>
+                        <td class="action-icons">
+                          <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                          <div class="dropdown">
+                            <a onclick="markAsCompleted(this)">Mark as Completed</a>
+                            <a onclick="viewOrder(this)">View Order</a>
+                          </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="order-id">a5cdd3b8-ec98-44b6-9d61-4544a71bbc87</td>
+                        <td>11 Feb, 2024</td>
+                        <td>₱10000.00</td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td><span class="badge processing">Processing</span></td>
+                        <td>2 items</td>
+                        <td class="action-icons">
+                          <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                          <div class="dropdown">
+                            <a onclick="markAsCompleted(this)">Mark as Completed</a>
+                            <a onclick="viewOrder(this)">View Order</a>
+                          </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="sales-history">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+        // Pending to Paid: toggleStatus(element, 'pending', 'paid');
+        // Paid to Pending: toggleStatus(element, 'paid', 'pending');
+        // Processing to Completed: toggleStatus(element, 'processing', 'completed');
+        // Completed to Processing: toggleStatus(element, 'completed', 'processing');
+        function toggleStatus(element, classA, classB) {
+            if (element.classList.contains(classA)) {
+                element.classList.remove(classA);
+                element.classList.add(classB);
+                element.textContent = classB.charAt(0).toUpperCase() + classB.slice(1);
+            }
+        }
+
+        function toggleDropdown(icon) {
+            let dropdown = icon.nextElementSibling;
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function markAsPaid(element) {
+          console.log(element);
+          let row = element.closest('tr');
+            let badge = row.querySelector('.badge');
+            toggleStatus(badge, 'pending', 'paid');
+            closeDropdown(element);
+            // TK backend logic
+        }
+
+        function markAsCompleted(element) {
+            let row = element.closest('tr');
+            let badge = row.querySelector('.processing');
+            toggleStatus(badge, 'processing', 'completed');
+            closeDropdown(element);
+            // TK backend logic
+        }
+
+        function closeDropdown(element) {
+            let dropdown = element.closest('.dropdown');
+            dropdown.style.display = 'none';
+        }
+
+        function viewOrder(element) {
+            let row = element.closest('tr');
+            let orderId = row.querySelector('.order-id').textContent;
+            // TK: kung maglalagay pa ng viewing ng order
+            closeDropdown(element);
+        }
+
+        document.addEventListener('click', function(event) {
+            let dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.parentElement.contains(event.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+</script>
+</body>
+</html>
