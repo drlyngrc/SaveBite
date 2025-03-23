@@ -18,7 +18,7 @@
             </div>
             <div class="order-body">
                 <div class="item-view">
-                    <img class="product-thumbnail" width="200" height="200" src="<%= product.image %>" alt="<%= product.name %>">
+                    <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
                 </div>
                 <div class="order-detail-view">
                     <div class="order-detail-card">
@@ -35,15 +35,13 @@
                             <div class="description-text"><%= product.description %></div>
                         </div>
                         <hr class="line-spacer">
-                        <div class="actions">
-                            <% if (currentUserId != product.userId) { %>
-                                <form action="" id="add-order">
-                                    <input type="number" id="product-quanity" placeholder="How many stock you want?">
-                                    <input type="text" style="display: none;" id="product-id" value="<%= product.productId %>">
-                                    <input type="submit" class="solid-button" value="Add to Cart"></input>
-                                </form>
-                            <% } %>
-                        </div>
+                        <% if (currentUserId != product.userId) { %>
+                            <form class="actions" action="" id="add-order">
+                                <input class="text-field" type="number" id="product-quanity" placeholder="How many do you want?" min="0" max="<%= product.quantity %>">
+                                <input type="submit" class="add-to-card-button solid-button" value="Add to Cart"></input>
+                                <input type="text" style="display: none;" id="product-id" value="<%= product.productId %>">
+                            </form>
+                        <% } %>
                         
                         <p id="message" class="auth-message">Message</p>
                     </div>

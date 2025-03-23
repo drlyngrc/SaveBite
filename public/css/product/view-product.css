@@ -191,19 +191,19 @@
 }
 
 .item-view {
-  width: min(100%, 100vmin);
-  height: min(100%, 100vmin);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  background-color: var(--pale-outline-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--pale-outline-color);
 }
 
-.item-image {
+.item-view img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   aspect-ratio: 1 / 1;
-  border-radius: 20px;
+  border-radius: 16px
 }
 
 .product-detail {
@@ -244,7 +244,11 @@
 }
 
 .actions {
-  display: grid;
-  grid-template-columns: 6fr 4fr;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.add-to-card-button {
+  width: 100%;
 }
