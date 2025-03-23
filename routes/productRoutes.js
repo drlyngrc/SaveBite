@@ -9,9 +9,13 @@ import UserService from "../services/UserService.js";
 const router = express.Router();
 const userService = new UserService();
 
-router.get("/add-product", userService.checkAuth.bind(userService), (req, res) => {
-  res.render("product/add-product.ejs", { currentRoute: '/add-product' });
-});
+router.get(
+  "/add-product",
+  userService.checkAuth.bind(userService),
+  (req, res) => {
+    res.render("product/add-product.ejs", { currentRoute: "/add-product" });
+  },
+);
 
 router.get(
   "/product-listing",

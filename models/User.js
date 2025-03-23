@@ -1,10 +1,10 @@
 class User {
-  constructor(userId, name, email, password, contact) {
+  constructor(userId, name, email, contact, address) {
     this.userId = userId;
     this.name = name;
     this.email = email;
-    this.password = password;
     this.contact = contact;
+    this.address = address;
     this.createAt = new Date().toISOString();
   }
 }

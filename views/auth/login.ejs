@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SaveBite | Log In</title>
     <link rel="stylesheet" href="/static/css/auth/login.css" />
+    <link rel="shortcut icon" href="static/icon-only.png" type="image/x-icon" />
   </head>
   <body>
     <div class="auth-container">
@@ -39,7 +40,7 @@
             } else {
               message.style.display = "block";
               message.style.color = "red";
-              message.textContent = result.error;
+              message.textContent = "Invalid email or password";
             }
           } catch (e) {
             message.style.color = "red";

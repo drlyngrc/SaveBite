@@ -19,28 +19,21 @@ class UserService {
     return userSnapshot.data();
   }
 
-  async updateProfile(
-    userId,
-    updateName,
-    updateEmail,
-    updatePassword,
-    updateContact,
-  ) {
+  async updateProfile(userId, updateEmail, updateContact, updateAddress) {
     if (!userId) throw new Error("User ID is required.");
 
     const userRef = doc(this.usersCollection, userId);
     const updateData = {};
 
-    if (updateName) updateData.name = updateName;
     if (updateEmail) updateData.email = updateEmail;
-    if (updatePassword) updateData.password = updatePassword;
     if (updateContact) updateData.contact = updateContact;
+    if (updateAddress) updateData.address = updateAddress;
 
     if (Object.keys(updateData).length === 0) {
       throw new Error("No profile information provided to update.");
     }
 
-    await updateDoc(userRef, updateData);
+    await updateDoc(userRef, updateData, { merge: true });
 
     return "User profile updated successfully.";
   }
@@ -48,7 +41,7 @@ class UserService {
   async checkAuth(req, res, next) {
     try {
       if (!req.session.userId) {
-        return res.redirect("/login");
+        return res.redirect("/");
       }
 
       const userId = req.session.userId;
@@ -56,7 +49,7 @@ class UserService {
       const userSnapshot = await getDoc(userRef);
 
       if (!userSnapshot.exists()) {
-        return res.redirect("/login");
+        return res.redirect("/");
       }
 
       next();

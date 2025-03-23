@@ -10,48 +10,67 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/css/product/view-product.css" />
+    <link rel="shortcut icon" href="static/icon-only.png" type="image/x-icon" />
   </head>
   <body>
     <div class="content-wrapper">
-        <div class="side-nav">
-            <%- include('../partials/side-nav') %>
-        </div>
-        <div class="main-content">
-            <div class="order-header">
-            </div>
-            <div class="order-body">
-                <div class="item-view">
-                    <img class="product-thumbnail" src="<%= product.image %>" alt="<%= product.name %>">
+      <div class="side-nav"><%- include('../partials/side-nav') %></div>
+      <div class="main-content">
+        <div class="order-header"></div>
+        <div class="order-body">
+          <div class="item-view">
+            <img
+              class="product-thumbnail"
+              src="<%= product.image %>"
+              alt="<%= product.name %>"
+            />
+          </div>
+          <div class="order-detail-view">
+            <div class="order-detail-card">
+              <div class="order-detail-header">
+                <div class="product-detail">
+                  <div class="product-category"><%= product.category %></div>
+                  <div class="product-title"><%= product.name %></div>
+                  <div class="product-price">₱<%= product.price %></div>
+                  <div class="description-text">
+                    Quantity: <%= product.quantity %>
+                  </div>
                 </div>
-                <div class="order-detail-view">
-                    <div class="order-detail-card">
-                        <div class="order-detail-header">
-                            <div class="product-detail">
-                                <div class="product-category"><%= product.category %></div>
-                                <div class="product-title"><%= product.name %></div>
-                                <div class="product-price">₱<%= product.price %></div>
-                                <div class="description-text">Quantity: <%= product.quantity %></div>
-                            </div>
-                        </div>
-                        <div class="description-detail">
-                            <div class="description-label">Description</div>
-                            <div class="description-text"><%= product.description %></div>
-                        </div>
-                        <hr class="line-spacer">
-                        <% if (currentUserId != product.userId) { %>
-                            <form class="actions" action="" id="add-order">
-                                <input class="text-field" type="number" id="product-quanity" placeholder="How many do you want?" min="0" max="<%= product.quantity %>">
-                                <input type="submit" class="add-to-card-button solid-button" value="Add to Cart"></input>
-                                <input type="text" style="display: none;" id="product-id" value="<%= product.productId %>">
-                            </form>
-                        <% } %>
-                        
-                        <p id="message" class="auth-message">Message</p>
-                    </div>
-                </div>
+              </div>
+              <div class="description-detail">
+                <div class="description-label">Description</div>
+                <div class="description-text"><%= product.description %></div>
+              </div>
+              <hr class="line-spacer" />
+              <% if (currentUserId != product.userId) { %>
+              <form class="actions" action="" id="add-order">
+                <input
+                  class="text-field"
+                  type="number"
+                  id="product-quanity"
+                  placeholder="How many do you want?"
+                  min="0"
+                  max="<%= product.quantity %>"
+                />
+                <input
+                  type="submit"
+                  class="add-to-card-button solid-button"
+                  value="Add to Cart"
+                />
+                <input
+                  type="text"
+                  style="display: none"
+                  id="product-id"
+                  value="<%= product.productId %>"
+                />
+              </form>
+              <% } %>
+
+              <p id="message" class="auth-message">Message</p>
             </div>
-            
+          </div>
         </div>
+      </div>
     </div>
 
     <script>
