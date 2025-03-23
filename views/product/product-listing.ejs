@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Listing | SaveBite</title>
 
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/static/css/product/product-listing.css">
-</head>
-<body>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/product/product-listing.css" />
+  </head>
+  <body>
     <div class="content-wrapper">
         <div class="side-nav">
           <%- include('../partials/side-nav') %>
@@ -84,7 +87,7 @@
         filterProducts();
       });
 
-      checkboxes.forEach(checkbox => {
+      checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", function () {
           filterProducts();
         });
@@ -93,15 +96,21 @@
       function filterProducts() {
         const keyword = searchInput.value.toLowerCase();
         const selectedCategories = Array.from(checkboxes)
-          .filter(checkbox => checkbox.checked)
-          .map(checkbox => checkbox.value);
+          .filter((checkbox) => checkbox.checked)
+          .map((checkbox) => checkbox.value);
 
-        productSquares.forEach(productSquare => {
-          const productTitle = productSquare.querySelector(".product-title").innerText.toLowerCase();
-          const productCategory = productSquare.querySelector("input[type='text']").value.toLowerCase();
+        productSquares.forEach((productSquare) => {
+          const productTitle = productSquare
+            .querySelector(".product-title")
+            .innerText.toLowerCase();
+          const productCategory = productSquare
+            .querySelector("input[type='text']")
+            .value.toLowerCase();
 
           const matchesKeyword = productTitle.includes(keyword);
-          const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(productCategory);
+          const matchesCategory =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(productCategory);
 
           if (matchesKeyword && matchesCategory) {
             productSquare.style.display = "block";
@@ -111,13 +120,15 @@
         });
       }
 
-      productSquares.forEach(productSquare => {
+      productSquares.forEach((productSquare) => {
         productSquare.addEventListener("click", async () => {
-          const productId = productSquare.querySelector("input:nth-of-type(2)").value;
+          const productId = productSquare.querySelector(
+            "input:nth-of-type(2)",
+          ).value;
 
           window.location.href = `/product/view/${productId}`;
         });
       });
     </script>
-</body>
+  </body>
 </html>

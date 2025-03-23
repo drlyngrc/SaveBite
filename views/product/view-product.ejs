@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SaveBite</title>
 
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/static/css/product/view-product.css">
-</head>
-<body>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/product/view-product.css" />
+  </head>
+  <body>
     <div class="content-wrapper">
         <div class="side-nav">
             <%- include('../partials/side-nav') %>
@@ -52,29 +55,31 @@
     </div>
 
     <script>
-        document.getElementById("add-order").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            
-            const productId = document.getElementById("product-id").value;
-            const quantity = document.getElementById("product-quanity").value;
-            
-            try {
-              const response = await fetch("/api/order/add-order", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ productId, quantity })
-              });
+      document
+        .getElementById("add-order")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
 
-              const result = await response.json();
+          const productId = document.getElementById("product-id").value;
+          const quantity = document.getElementById("product-quanity").value;
 
-              message.style.display = "block";
-              message.style.color = response.ok ? "green" : "red";
-              message.textContent = response.ok ? result.message : result.error;
-            } catch (e) {
-              message.style.color = "red";
-              message.textContent = e.message;
-            }
-      });
+          try {
+            const response = await fetch("/api/order/add-order", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ productId, quantity }),
+            });
+
+            const result = await response.json();
+
+            message.style.display = "block";
+            message.style.color = response.ok ? "green" : "red";
+            message.textContent = response.ok ? result.message : result.error;
+          } catch (e) {
+            message.style.color = "red";
+            message.textContent = e.message;
+          }
+        });
     </script>
-</body>
+  </body>
 </html>

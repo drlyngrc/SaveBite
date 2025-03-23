@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SaveBite | Log In</title>
-    <link rel="stylesheet" href="/static/css/auth/login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/css/auth/login.css" />
+  </head>
+  <body>
     <div class="auth-container">
-        <form action="" id="login" class="auth-form">
-            <input type="text" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-            <input type="submit" class="primary-button" value="Log In">
-            <a href="/signup">Create an account</a>
-            <p id="message" class="auth-message">Message</p>
-        </form>
+      <form action="" id="login" class="auth-form">
+        <input type="text" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <input type="submit" class="primary-button" value="Log In" />
+        <a href="/signup">Create an account</a>
+        <p id="message" class="auth-message">Message</p>
+      </form>
     </div>
-    
+
     <script>
-        document.getElementById("login").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const message = document.getElementById("message");
+      document
+        .getElementById("login")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
 
-            try {
-                const response = await fetch("/api/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json"},
-                    body: JSON.stringify({ email, password })
-                });
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const message = document.getElementById("message");
 
-                if (response.ok) {
-                    window.location.href = "/product";
-                } else {
-                    message.style.display = "block";
-                    message.style.color = "red";
-                    message.textContent = result.error;
-                }
-            } catch (e) {
-                message.style.color = "red";
-                message.textContent = e.message;
+          try {
+            const response = await fetch("/api/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+
+            if (response.ok) {
+              window.location.href = "/product";
+            } else {
+              message.style.display = "block";
+              message.style.color = "red";
+              message.textContent = result.error;
             }
+          } catch (e) {
+            message.style.color = "red";
+            message.textContent = e.message;
+          }
         });
     </script>
-</body>
+  </body>
 </html>

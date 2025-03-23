@@ -1,6 +1,5 @@
 @import "../global.css";
 
-
 .content-wrapper {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -56,7 +55,6 @@
   font-weight: 700;
 }
 
-
 .field-set {
   display: flex;
   flex-direction: column;
@@ -70,7 +68,7 @@
 }
 
 .text-field {
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   border: 1px solid black;
   border-radius: 5px;
   font-size: 0.9rem;
@@ -96,7 +94,6 @@
 
 .editable-field i {
   transform: translateX(-35px);
-
 }
 .actions {
   display: flex;
@@ -130,7 +127,7 @@
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  border: 0px solid transparent; 
+  border: 0px solid transparent;
   box-sizing: border-box;
   margin: 0;
 }

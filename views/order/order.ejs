@@ -1,258 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SaveBite</title>
 
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/static/css/order/order-view.css">
-</head>
-<body>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/order/order-view.css" />
+  </head>
+  <body>
     <div class="content-wrapper">
-        <div class="side-nav">
-            <%- include('../partials/side-nav') %>
+      <div class="side-nav"><%- include('../partials/side-nav') %></div>
+      <div class="main-content">
+        <div class="order-header">
+          <div class="order-id">
+            <span class="order-id-title">My Cart</span>
+          </div>
         </div>
-        <div class="main-content">
-            <div class="order-header">
-                <div class="order-id">
-                    <span class="order-id-title">My Cart</span>
+        <div class="order-body">
+          <div class="order-view">
+            <div class="order-detail-card">
+              <div class="order-detail-header">
+                <div class="card-title">Order Item</div>
+              </div>
+              <div class="order-detail-body">
+                <div class="order-item-listview">
+                  <% const userOrders = orders.filter(order => userId ===
+                  order.buyerId); %> <% userOrders.forEach(order => { %>
+                  <div class="order-item">
+                    <input
+                      type="hidden"
+                      class="order-id-input"
+                      value="<%= order.orderId %>"
+                    />
+                    <input
+                      type="hidden"
+                      class="product-id-input"
+                      value="<%= order.product.id %>"
+                    />
+                    <input
+                      type="hidden"
+                      class="quantity-input"
+                      value="<%= order.quantity %>"
+                    />
+
+                    <div class="order-item-left">
+                      <div class="order-item-thumbnail">
+                        <img
+                          src="<%= order.product.image %>"
+                          width="100"
+                          height="100"
+                          alt="<%= order.product.name %>"
+                          class="product-thumbnail"
+                        />
+                      </div>
+                      <div class="order-item-details">
+                        <div class="order-item-details-top">
+                          <div class="order-category">
+                            <%= order.product.category %>
+                          </div>
+                          <div class="order-item-name">
+                            <%= order.product.name %>
+                          </div>
+                        </div>
+                        <div class="order-item-details-bottom">
+                          <div class="order-additional-details">
+                            Quantity: <%= order.quantity %> | Price: ₱<%=
+                            parseFloat(order.product.price).toFixed(2) %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="order-item-right">
+                      <div class="order-item-breakdown">
+                        <%= order.quantity %> x ₱<%=
+                        parseFloat(order.product.price).toFixed(2) %>
+                      </div>
+                      <div class="order-item-price-spacer">|</div>
+                      <div class="order-item-total-price">
+                        ₱<%= order.totalAmount.toFixed(2) %>
+                      </div>
+                      <form
+                        id="delete-order-<%= order.orderId %>"
+                        class="delete-order-form"
+                      >
+                        <input
+                          type="hidden"
+                          name="orderId"
+                          value="<%= order.orderId %>"
+                        />
+                        <button
+                          type="submit"
+                          class="order-item-action action-button"
+                        >
+                          <i class="bx bx-trash"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  <% }) %>
                 </div>
+              </div>
             </div>
-            <div class="order-body">
-                <div class="order-view">
-                    <div class="order-detail-card">
-                        <div class="order-detail-header">
-                            <div class="card-title">Order Item</div>
-                        </div>
-                        <div class="order-detail-body">
-                            <div class="order-item-listview">
-                                <% const userOrders = orders.filter(order => userId === order.buyerId); %>
-                                <% userOrders.forEach(order => { %>
-                                    <div class="order-item">
-                                        <input type="hidden" class="order-id-input" value="<%= order.orderId %>">
-                                        <input type="hidden" class="product-id-input" value="<%= order.product.id %>">
-                                        <input type="hidden" class="quantity-input" value="<%= order.quantity %>">
-                                        
-                                        <div class="order-item-left">
-                                            <div class="order-item-thumbnail">
-                                                <img src="<%= order.product.image %>" width="100" height="100" alt="<%= order.product.name %>" class="product-thumbnail">
-                                            </div>
-                                            <div class="order-item-details">
-                                                <div class="order-item-details-top">
-                                                    <div class="order-category">
-                                                        <%= order.product.category %>
-                                                    </div>
-                                                    <div class="order-item-name">
-                                                        <%= order.product.name %>
-                                                    </div>
-                                                </div>
-                                                <div class="order-item-details-bottom">
-                                                    <div class="order-additional-details">
-                                                        Quantity: <%= order.quantity %> | Price: ₱<%= parseFloat(order.product.price).toFixed(2) %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="order-item-right">
-                                            <div class="order-item-breakdown">
-                                                <%= order.quantity %> x ₱<%= parseFloat(order.product.price).toFixed(2) %>
-                                            </div>
-                                            <div class="order-item-price-spacer">
-                                                |
-                                            </div>
-                                            <div class="order-item-total-price">
-                                                ₱<%= order.totalAmount.toFixed(2) %>
-                                            </div>
-                                            <form id="delete-order-<%= order.orderId %>" class="delete-order-form">
-                                                <input type="hidden" name="orderId" value="<%= order.orderId %>">
-                                                <button type="submit" class="order-item-action action-button">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                <% }) %>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="order-detail-card">
-                        <div class="order-detail-header">
-                            <div class="card-title">Order Summary</div>
-                        </div>
-                        <div class="order-detail-body">
-                            <div class="order-summary-detail-list-view">
-                                <div class="order-summary-detail-list-item">
-                                    <div class="order-summary-detail-name">Subtotal</div>
-                                    <div class="order-summary-detail-additional"><%= userOrders.length %> items</div>
-                                    <div class="order-summary-detail-price">
-                                        ₱<%= userOrders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2) %>
-                                    </div>
-                                </div>
-                                <div class="order-summary-detail-list-item">
-                                    <div class="order-summary-detail-name">Shipping Fee</div>
-                                    <div class="order-summary-detail-additional">3kg</div>
-                                    <div class="order-summary-detail-price">₱100.00</div>
-                                </div>
-                                <div class="order-summary-detail-list-item">
-                                    <div class="order-summary-detail-name order-total-title">Total</div>
-                                    <div class="order-summary-detail-additional"></div>
-                                    <div class="order-summary-detail-price order-total-price">
-                                        ₱<%= (userOrders.reduce((sum, order) => sum + order.totalAmount, 0) + 100).toFixed(2) %>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="line-spacer">
-                            <div class="order-confirmation">
-                                <div class="order-reminder">
-                                    Please review your order before confirming purchase
-                                </div>
-                                <form id="payment-form">
-                                    <button type="submit" class="order-confirm-button solid-button">
-                                        Confirm Purchase
-                                    </button>
-                                </form>
-                                <p id="message" class="auth-message">Message</p>
-                            </div>
-                        </div>
+            <div class="order-detail-card">
+              <div class="order-detail-header">
+                <div class="card-title">Order Summary</div>
+              </div>
+              <div class="order-detail-body">
+                <div class="order-summary-detail-list-view">
+                  <div class="order-summary-detail-list-item">
+                    <div class="order-summary-detail-name">Subtotal</div>
+                    <div class="order-summary-detail-additional">
+                      <%= userOrders.length %> items
                     </div>
+                    <div class="order-summary-detail-price">
+                      ₱<%= userOrders.reduce((sum, order) => sum +
+                      order.totalAmount, 0).toFixed(2) %>
+                    </div>
+                  </div>
+                  <div class="order-summary-detail-list-item">
+                    <div class="order-summary-detail-name">Shipping Fee</div>
+                    <div class="order-summary-detail-additional">3kg</div>
+                    <div class="order-summary-detail-price">₱100.00</div>
+                  </div>
+                  <div class="order-summary-detail-list-item">
+                    <div class="order-summary-detail-name order-total-title">
+                      Total
+                    </div>
+                    <div class="order-summary-detail-additional"></div>
+                    <div class="order-summary-detail-price order-total-price">
+                      ₱<%= (userOrders.reduce((sum, order) => sum +
+                      order.totalAmount, 0) + 100).toFixed(2) %>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="order-detail-view">
-                    <div class="order-detail-card">
-                        <div class="order-detail-header">
-                            <div class="order-detail-card-title">
-                                <div class="card-title">Contact Information</div>
-                                <div class="edit-details action-button">
-                                    <i class='bx bx-edit-alt'></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-detail-body">
-                            <div class="order-detail-card-list-item">
-                                <div class="card-list-item">0930 776 9827</div>
-                                <div class="card-list-item">123@gmail.com</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="order-detail-card">
-                        <div class="order-detail-header">
-                            <div class="order-detail-card-title">
-                                <div class="card-title">Shipping Address</div>
-                                <div class="edit-details action-button">
-                                    <i class='bx bx-edit-alt'></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-detail-body">
-                            <div class="order-detail-card-list-item">
-                                <div class="card-list-item">Vladimir Jocson</div>
-                                <div class="card-list-item">House number</div>
-                                <div class="card-list-item">Street, Subd</div>
-                                <div class="card-list-item">City, Province</div>
-                            </div>
-                        </div>
-                    </div>
+                <hr class="line-spacer" />
+                <div class="order-confirmation">
+                  <div class="order-reminder">
+                    Please review your order before confirming purchase
+                  </div>
+                  <form id="payment-form">
+                    <button
+                      type="submit"
+                      class="order-confirm-button solid-button"
+                    >
+                      Confirm Purchase
+                    </button>
+                  </form>
+                  <p id="message" class="auth-message">Message</p>
                 </div>
+              </div>
             </div>
+          </div>
+
+          <div class="order-detail-view">
+            <div class="order-detail-card">
+              <div class="order-detail-header">
+                <div class="order-detail-card-title">
+                  <div class="card-title">Contact Information</div>
+                  <div class="edit-details action-button">
+                    <i class="bx bx-edit-alt"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="order-detail-body">
+                <div class="order-detail-card-list-item">
+                  <div class="card-list-item">0930 776 9827</div>
+                  <div class="card-list-item">123@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-detail-card">
+              <div class="order-detail-header">
+                <div class="order-detail-card-title">
+                  <div class="card-title">Shipping Address</div>
+                  <div class="edit-details action-button">
+                    <i class="bx bx-edit-alt"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="order-detail-body">
+                <div class="order-detail-card-list-item">
+                  <div class="card-list-item">Vladimir Jocson</div>
+                  <div class="card-list-item">House number</div>
+                  <div class="card-list-item">Street, Subd</div>
+                  <div class="card-list-item">City, Province</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("payment-form").addEventListener("submit", async (event) => {
-                event.preventDefault();
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .getElementById("payment-form")
+          .addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-                const orders = Array.from(document.querySelectorAll(".order-item")).map(order => {
-                    return {
-                        orderId: order.querySelector(".order-id-input").value,
-                        productId: order.querySelector(".product-id-input").value,
-                        quantity: parseInt(order.querySelector(".quantity-input").value),
-                    };
-                }).filter(order => order.orderId && order.productId);
+            const orders = Array.from(document.querySelectorAll(".order-item"))
+              .map((order) => {
+                return {
+                  orderId: order.querySelector(".order-id-input").value,
+                  productId: order.querySelector(".product-id-input").value,
+                  quantity: parseInt(
+                    order.querySelector(".quantity-input").value,
+                  ),
+                };
+              })
+              .filter((order) => order.orderId && order.productId);
 
-                if (orders.length === 0) {
-                    console.warn("No valid orders to process.");
-                    return;
-                }
+            if (orders.length === 0) {
+              console.warn("No valid orders to process.");
+              return;
+            }
 
-                console.log("Submitting payment request:", orders);
+            console.log("Submitting payment request:", orders);
 
-                try {
-                    const response = await fetch("/api/payment/process-payment", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ orders })
-                    });
+            try {
+              const response = await fetch("/api/payment/process-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ orders }),
+              });
 
-                    const result = await response.json();
-                    const message = document.getElementById("message");
+              const result = await response.json();
+              const message = document.getElementById("message");
 
-                    if (response.ok) {
-                        message.textContent = result.message;
-                        message.style.color = "green";
-                        setTimeout(() => location.reload(), 1000);
-                    } else {
-                        message.textContent = result.message || "Error confirming payment.";
-                        message.style.color = "red";
-                    }
-                } catch (error) {
-                    console.error("Payment processing error:", error);
-                }
-            });
+              if (response.ok) {
+                message.textContent = result.message;
+                message.style.color = "green";
+                setTimeout(() => location.reload(), 1000);
+              } else {
+                message.textContent =
+                  result.message || "Error confirming payment.";
+                message.style.color = "red";
+              }
+            } catch (error) {
+              console.error("Payment processing error:", error);
+            }
+          });
 
-            document.querySelector(".order-item-listview").addEventListener("submit", async (event) => {
-                event.preventDefault();
+        document
+          .querySelector(".order-item-listview")
+          .addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-                if (event.target.classList.contains("delete-order-form")) {
-                    const form = event.target;
-                    const orderId = form.querySelector("input[name='orderId']").value;
+            if (event.target.classList.contains("delete-order-form")) {
+              const form = event.target;
+              const orderId = form.querySelector("input[name='orderId']").value;
 
-                    try {
-                        const response = await fetch("/api/order/delete-order", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ orderId })
-                        });
-
-                        const result = await response.json();
-                        const message = document.createElement("div");
-                        message.style.color = response.ok ? "green" : "red";
-                        message.textContent = response.ok ? result.message : result.error;
-                        form.parentElement.appendChild(message);
-
-                        if (response.ok) {
-                            form.closest(".order-item").remove();
-                            updateOrderSummary();
-                        }
-                    } catch (error) {
-                        console.error("Error deleting order:", error.message);
-                    }
-                }
-            });
-
-            function updateOrderSummary() {
-                const remainingOrders = document.querySelectorAll(".order-item");
-                const subtotalElement = document.querySelector(".order-summary-detail-price");
-                const totalElement = document.querySelector(".order-total-price");
-                const itemCountElement = document.querySelector(".order-summary-detail-additional");
-
-                let subtotal = 0;
-                remainingOrders.forEach(order => {
-                    const totalPriceElement = order.querySelector(".order-item-total-price");
-                    subtotal += parseFloat(totalPriceElement.textContent.replace("₱", ""));
+              try {
+                const response = await fetch("/api/order/delete-order", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ orderId }),
                 });
 
-                const shippingFee = 100;
-                const total = subtotal + shippingFee;
+                const result = await response.json();
+                const message = document.createElement("div");
+                message.style.color = response.ok ? "green" : "red";
+                message.textContent = response.ok
+                  ? result.message
+                  : result.error;
+                form.parentElement.appendChild(message);
 
-                subtotalElement.textContent = `₱${subtotal.toFixed(2)}`;
-                totalElement.textContent = `₱${total.toFixed(2)}`;
-                itemCountElement.textContent = `${remainingOrders.length} items`;
+                if (response.ok) {
+                  form.closest(".order-item").remove();
+                  updateOrderSummary();
+                }
+              } catch (error) {
+                console.error("Error deleting order:", error.message);
+              }
             }
-        });
+          });
+
+        function updateOrderSummary() {
+          const remainingOrders = document.querySelectorAll(".order-item");
+          const subtotalElement = document.querySelector(
+            ".order-summary-detail-price",
+          );
+          const totalElement = document.querySelector(".order-total-price");
+          const itemCountElement = document.querySelector(
+            ".order-summary-detail-additional",
+          );
+
+          let subtotal = 0;
+          remainingOrders.forEach((order) => {
+            const totalPriceElement = order.querySelector(
+              ".order-item-total-price",
+            );
+            subtotal += parseFloat(
+              totalPriceElement.textContent.replace("₱", ""),
+            );
+          });
+
+          const shippingFee = 100;
+          const total = subtotal + shippingFee;
+
+          subtotalElement.textContent = `₱${subtotal.toFixed(2)}`;
+          totalElement.textContent = `₱${total.toFixed(2)}`;
+          itemCountElement.textContent = `${remainingOrders.length} items`;
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
