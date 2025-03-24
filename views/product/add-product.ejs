@@ -62,10 +62,11 @@
                   <div class="field-label">Exact Price (₱)</div>
                   <input
                     class="text-field"
-                    type="text"
+                    type="number"
                     name="product-price"
                     id="product-price"
                     placeholder="Enter price for the item"
+                    min="0.0"
                     required
                   />
                 </div>
@@ -85,6 +86,7 @@
                       name="product-quantity"
                       id="product-quantity"
                       placeholder="Enter the quantity"
+                      min="1"
                       required
                     />
                   </div>
@@ -159,10 +161,10 @@
                 type="submit"
                 value="Submit"
                 style="width: 100%"
-                class="primary-button"
+                class="solid-button"
               />
-              <p id="message" class="auth-message">Message</p>
             </div>
+            <p id="message" class="auth-message">&nbsp;</p>
           </div>
         </form>
       </div>
