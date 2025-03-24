@@ -136,8 +136,9 @@ a:active {
 }
 
 .main-content {
-  margin-left: 250px;
-  width: 73vw;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-column-start: 2;
 }
 
 .header-logo {
