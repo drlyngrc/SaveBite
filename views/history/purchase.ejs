@@ -51,11 +51,9 @@
                   <td><%= order.quantity %></td>
                   <td>₱<%= order.amount.toFixed(2) %></td>
                   <td>
-                    <span class="delivery-status"
-                      ><%= order.deliveryStatus %></span
-                    >
+                    <span class="delivery-status badge <%= order.deliveryStatus === 'Pending' ?  'processing' : 'completed' %>"><%= order.deliveryStatus === 'Pending' ?  'Processing' : 'Received' %></span>
                   </td>
-                  <td><%= order.paymentStatus %></td>
+                  <td><span class="badge <%= order.paymentStatus === 'Pending' ?  'pending' : 'paid' %>"><%= order.paymentStatus %></span></td>
                   <td class="action-icons">
                     <i
                       class="bx bx-dots-vertical-rounded"
