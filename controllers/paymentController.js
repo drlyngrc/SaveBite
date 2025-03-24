@@ -1,13 +1,4 @@
 import PaymentService from "../services/PaymentService.js";
-import { db } from "../config/firebase.js";
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  doc,
-  getDoc,
-} from "firebase/firestore";
 
 const paymentService = new PaymentService();
 
@@ -46,38 +37,71 @@ export const processPayments = async (req, res) => {
   }
 };
 
-export const getSalesHistory = async (req, res) => {
+const getHistory = async (req, res, isSales) => {
   try {
     const userId = req.session.userId;
 
     if (!userId) {
       return res.status(401).json({
-        message: "Unauthorized. Please log in to view sales history.",
+        message: "Unauthorized. Please log in to view your history.",
       });
     }
 
-    const matchedOrders = await paymentService.getSalesHistory(userId);
-    res.render("history/sales.ejs", { matchedOrders, currentRoute: '/history/sales' });
+    const matchedOrders = isSales
+      ? await paymentService.getSalesHistory(userId)
+      : await paymentService.getPurchaseHistory(userId);
+
+    const viewPath = isSales ? "history/sales.ejs" : "history/purchase.ejs";
+    const currentRoute = isSales ? "/history/sales" : "/history/purchase";
+
+    res.render(viewPath, { matchedOrders, currentRoute });
   } catch (error) {
-    console.error("Error retrieving sales history:", error);
-    res.status(500).send("Failed to load sales history.");
+    console.error(
+      `Error retrieving ${isSales ? "sales" : "purchase"} history:`,
+      error,
+    );
+    res
+      .status(500)
+      .send(`Failed to load ${isSales ? "sales" : "purchase"} history.`);
   }
 };
 
-export const getPurchaseHistory = async (req, res) => {
+export const getSalesHistory = (req, res) => getHistory(req, res, true);
+export const getPurchaseHistory = (req, res) => getHistory(req, res, false);
+
+const updateHistoryStatus = async (req, res, updateFunction) => {
   try {
-    const userId = req.session.userId;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized. Please log in to view sales history.",
+    const { paymentId, orderId } = req.body;
+    if (!paymentId || !orderId) {
+      return res.status(400).json({
+        success: false,
+        message: "Both paymentId and orderId are required.",
       });
     }
 
-    const matchedOrders = await paymentService.getPurchaseHistory(userId);
-    res.render("history/purchase.ejs", { matchedOrders, currentRoute: '/history/purchase' });
+    const result = await updateFunction(paymentId, orderId);
+    return res.status(200).json({
+      success: true,
+      message: `Order ${result.orderId} marked as ${result.status}.`,
+    });
   } catch (error) {
-    console.error("Error retrieving sales history:", error);
-    res.status(500).send("Failed to load sales history.");
+    console.error("Error updating history status:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: `Error updating history status: ${error.message}`,
+    });
   }
 };
+
+export const updateSalesHistoryStatus = (req, res) =>
+  updateHistoryStatus(
+    req,
+    res,
+    paymentService.updateSalesHistory.bind(paymentService),
+  );
+export const updatePurchaseHistoryStatus = (req, res) =>
+  updateHistoryStatus(
+    req,
+    res,
+    paymentService.updatePurchaseHistoryStatus.bind(paymentService),
+  );
