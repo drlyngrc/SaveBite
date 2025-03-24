@@ -34,6 +34,8 @@
                   <th>Quantity</th>
                   <th>Amount</th>
                   <th>Delivery Status</th>
+                  <th>Payment Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,7 +48,39 @@
                   <td><%= order.productName %></td>
                   <td><%= order.quantity %></td>
                   <td>₱<%= order.amount.toFixed(2) %></td>
-                  <td><%= order.status %></td>
+                  <td>
+                    <span class="delivery-status badge <%= order.deliveryStatus === 'Pending' ?  'processing' : 'completed' %>"><%= order.deliveryStatus === 'Pending' ?  'Processing' : 'Received' %></span>
+                  </td>
+                  <td><span class="badge <%= order.paymentStatus === 'Pending' ?  'pending' : 'paid' %>"><%= order.paymentStatus %></span></td>
+                  <td class="action-icons">
+                    <i
+                      class="bx bx-dots-vertical-rounded"
+                      onclick="toggleDropdown(this)"
+                    ></i>
+                    <div class="dropdown">
+                      <form
+                        class="update-sales-status"
+                        id="form-<%= order.paymentId %>"
+                        action=""
+                      >
+                        <input
+                          type="text"
+                          class="actual-payment-id"
+                          style="display: none"
+                          value="<%= order.paymentId %>"
+                        />
+                        <input
+                          type="text"
+                          class="actual-order-id"
+                          style="display: none"
+                          value="<%= order.orderId %>"
+                        />
+                        <% if (order.paymentStatus !== "Paid") { %>
+                        <button type="submit">Mark as Paid</button>
+                        <% } %>
+                      </form>
+                    </div>
+                  </td>
                 </tr>
                 <% }); %>
               </tbody>
@@ -81,17 +115,9 @@
 
       function markAsPaid(element) {
         console.log(element);
-        let row = element.closest("tr");
-        let badge = row.querySelector(".badge");
-        toggleStatus(badge, "pending", "paid");
-        closeDropdown(element);
-        // TK backend logic
-      }
-
-      function markAsCompleted(element) {
-        let row = element.closest("tr");
-        let badge = row.querySelector(".processing");
-        toggleStatus(badge, "processing", "completed");
+        // let row = element.closest("tr");
+        // let badge = row.querySelector(".badge");
+        // toggleStatus(badge, "pending", "paid");
         closeDropdown(element);
         // TK backend logic
       }
@@ -113,6 +139,32 @@
         dropdowns.forEach((dropdown) => {
           if (!dropdown.parentElement.contains(event.target)) {
             dropdown.style.display = "none";
+          }
+        });
+      });
+
+      document.querySelectorAll(".update-sales-status").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const row = form.closest("tr");
+          const paymentId = row.querySelector(".actual-payment-id").value;
+          const orderId = row.querySelector(".actual-order-id").value;
+
+          console.log(`payment: ${paymentId}`);
+          console.log(`order: ${orderId}`);
+
+          try {
+            const response = await fetch("/api/payment/update-sales", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId, orderId }),
+            });
+
+            const result = await response.json();
+            location.reload();
+          } catch (e) {
+            console.error(e);
           }
         });
       });

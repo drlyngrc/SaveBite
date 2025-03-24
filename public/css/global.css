@@ -96,7 +96,7 @@ body {
 
 .auth-message {
   font-size: 0.9rem;
-  display: none;
+  display: block;
 }
 
 input {
@@ -136,19 +136,22 @@ a:active {
 }
 
 .main-content {
-  margin-left: 250px;
-  width: 73vw;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-column-start: 2;
 }
 
 .header-logo {
   display: flex;
-  width: 80%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .nav-header {
   display: flex;
   flex-direction: column;
-  /* row-gap: 3rem; */
+  row-gap: 1rem;
 }
 
 .nav-footer {
@@ -203,7 +206,7 @@ a:active {
 
 .logo-img {
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
   margin-left: -1rem;
 }
 

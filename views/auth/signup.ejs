@@ -9,15 +9,52 @@
   </head>
   <body>
     <div class="auth-container">
+      <div class="big-logo">
+        <img src="/static/name-logo.png" alt="" />
+      </div>
       <form action="" id="signup" class="auth-form">
-        <input type="text" id="name" placeholder="Name" required />
-        <input type="text" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <input type="text" id="contact" placeholder="Contact Number" required />
-        <input type="text" id="address" placeholder="Address" required />
-        <input type="submit" class="primary-button" value="Sign Up" />
+        <input
+          class="text-field"
+          type="text"
+          id="name"
+          placeholder="Name"
+          required
+        />
+        <input
+          class="text-field"
+          type="text"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          class="text-field"
+          type="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
+        <input
+          class="text-field"
+          type="text"
+          id="contact"
+          placeholder="Contact Number"
+          required
+        />
+        <input
+          class="text-field"
+          type="text"
+          id="address"
+          placeholder="Address"
+          required
+        />
+        <input
+          type="submit"
+          class="submit-button solid-button"
+          value="Sign Up"
+        />
         <a href="/">Already have an account?</a>
-        <p id="message" class="auth-message">Message - visible for now</p>
+        <p id="message" class="auth-message">&nbsp;</p>
       </form>
     </div>
 
@@ -43,7 +80,6 @@
 
             const result = await response.json();
 
-            message.style.display = "block";
             message.style.color = response.ok ? "green" : "red";
             message.textContent = response.ok ? result.message : result.error;
           } catch (e) {
