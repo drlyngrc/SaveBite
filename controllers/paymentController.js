@@ -57,7 +57,7 @@ export const getSalesHistory = async (req, res) => {
     }
 
     const matchedOrders = await paymentService.getSalesHistory(userId);
-    res.render("history/sales.ejs", { matchedOrders });
+    res.render("history/sales.ejs", { matchedOrders, currentRoute: '/history/sales' });
   } catch (error) {
     console.error("Error retrieving sales history:", error);
     res.status(500).send("Failed to load sales history.");
@@ -75,7 +75,7 @@ export const getPurchaseHistory = async (req, res) => {
     }
 
     const matchedOrders = await paymentService.getPurchaseHistory(userId);
-    res.render("history/purchase.ejs", { matchedOrders });
+    res.render("history/purchase.ejs", { matchedOrders, currentRoute: '/history/purchase' });
   } catch (error) {
     console.error("Error retrieving sales history:", error);
     res.status(500).send("Failed to load sales history.");
