@@ -96,7 +96,7 @@ body {
 
 .auth-message {
   font-size: 0.9rem;
-  display: none;
+  display: block;
 }
 
 input {
