@@ -65,6 +65,7 @@
                   name="phone-number"
                   id="phone-number"
                   value="<%= locals.contact %>"
+                  placeholder="Enter your active phone number"
                   disabled
                 />
                 <div
@@ -84,6 +85,7 @@
                   name="email"
                   id="email"
                   value="<%= locals.email %>"
+                  placeholder="Enter your active email address"
                   disabled
                 />
                 <div
@@ -103,7 +105,7 @@
                   name="shipping-address"
                   id="shipping-address"
                   value="<%= locals.address %>"
-                  placeholder="Current shipping address"
+                  placeholder="Enter your current shipping address"
                   disabled
                 />
                 <div
@@ -117,7 +119,6 @@
           </div>
           <div class="actions">
             <button type="submit" class="solid-button">Save Changes</button>
-            <button class="hollow-button">Discard Changes</button>
           </div>
           <p id="message" class="auth-message">&nbsp;</p>
         </form>
