@@ -34,24 +34,55 @@
                   <th>Quantity</th>
                   <th>Amount</th>
                   <th>Delivery Status</th>
+                  <th>Payment Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <% matchedOrders.forEach((order) => { %>
                 <tr>
-                  <td class="order-id"><%= order.paymentId %></td>
+                  <td class="order-id" id="order.orderId %>">
+                    <%= order.paymentId %>
+                  </td>
                   <td>
                     <%= new Date(order.createdAt).toLocaleString('en-US') %>
                   </td>
                   <td><%= order.productName %></td>
                   <td><%= order.quantity %></td>
                   <td>₱<%= order.amount.toFixed(2) %></td>
-                  <td><%= order.status %></td>
+                  <td>
+                    <span class="delivery-status"
+                      ><%= order.deliveryStatus %></span
+                    >
+                  </td>
+                  <td><%= order.paymentStatus %></td>
                   <td class="action-icons">
-                    <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                    <i
+                      class="bx bx-dots-vertical-rounded"
+                      onclick="toggleDropdown(this)"
+                    ></i>
                     <div class="dropdown">
-                      <a onclick="markAsCompleted(this)">Mark as Received</a>
+                      <form
+                        class="update-purchase-status"
+                        id="form-<%= order.paymentId %>"
+                        action=""
+                      >
+                        <input
+                          type="text"
+                          class="actual-payment-id"
+                          style="display: none"
+                          value="<%= order.paymentId %>"
+                        />
+                        <input
+                          type="text"
+                          class="actual-order-id"
+                          style="display: none"
+                          value="<%= order.orderId %>"
+                        />
+                        <% if (order.deliveryStatus !== "Received") { %>
+                        <button type="submit">Mark as Received</button>
+                        <% } %>
+                      </form>
                     </div>
                   </td>
                 </tr>
@@ -111,6 +142,32 @@
         dropdowns.forEach((dropdown) => {
           if (!dropdown.parentElement.contains(event.target)) {
             dropdown.style.display = "none";
+          }
+        });
+      });
+
+      document.querySelectorAll(".update-purchase-status").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const row = form.closest("tr");
+          const paymentId = row.querySelector(".actual-payment-id").value;
+          const orderId = row.querySelector(".actual-order-id").value;
+
+          console.log(`payment: ${paymentId}`);
+          console.log(`order: ${orderId}`);
+
+          try {
+            const response = await fetch("/api/payment/update-purchase", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId, orderId }),
+            });
+
+            const result = await response.json();
+            location.reload();
+          } catch (e) {
+            console.error(e);
           }
         });
       });

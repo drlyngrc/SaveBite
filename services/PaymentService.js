@@ -6,11 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 import {
   collection,
   doc,
-  query,
   writeBatch,
   getDoc,
   getDocs,
-  where,
+  updateDoc,
 } from "firebase/firestore";
 
 class PaymentService {
@@ -33,11 +32,7 @@ class PaymentService {
     const batch = writeBatch(db);
 
     try {
-      console.log("Processing orders for user:", userId);
-
       for (const order of orders) {
-        console.log("Processing order:", order);
-
         const productRef = doc(db, "products", order.productId);
         const productSnap = await getDoc(productRef);
 
@@ -46,7 +41,6 @@ class PaymentService {
         }
 
         const product = productSnap.data();
-        console.log("Fetched product data:", product);
 
         if (!product.quantity || product.quantity < order.quantity) {
           throw new Error(`Insufficient stock for product: ${product.name}`);
@@ -74,7 +68,8 @@ class PaymentService {
           amount: orderAmount,
           productName: product.name,
           productCategory: product.category,
-          status: "Pending",
+          paymentStatus: "Pending",
+          deliveryStatus: "Pending",
         };
 
         const orderDocRef = doc(
@@ -103,7 +98,6 @@ class PaymentService {
       batch.set(paymentDocRef, { ...paymentData });
 
       await batch.commit();
-      console.log("Firestore transaction committed successfully.");
     } catch (error) {
       console.error("Error processing orders:", error);
       throw new Error("Transaction failed: " + error.message);
@@ -112,7 +106,7 @@ class PaymentService {
     return { paymentId, totalAmount, orderResults };
   }
 
-  async getSalesHistory(userId) {
+  async getHistory(userId, isSales = false) {
     try {
       const snapshot = await getDocs(this.paymentCollection);
       const matchedOrders = [];
@@ -125,82 +119,90 @@ class PaymentService {
         for (const orderDoc of ordersSnapshot.docs) {
           const orderData = orderDoc.data();
 
-          const productRef = doc(db, "products", orderData.productId);
-          const productSnap = await getDoc(productRef);
+          if (isSales) {
+            const productRef = doc(db, "products", orderData.productId);
+            const productSnap = await getDoc(productRef);
 
-          if (!productSnap.exists()) {
-            console.warn(
-              `Product not found for productId: ${orderData.productId}`,
-            );
-            continue;
-          }
+            if (!productSnap.exists()) {
+              console.warn(
+                `Product not found for productId: ${orderData.productId}`,
+              );
+              continue;
+            }
 
-          const productData = productSnap.data();
+            const productData = productSnap.data();
 
-          if (productData.userId === userId) {
-            matchedOrders.push({
-              paymentId: paymentDoc.id,
-              createdAt: paymentData.createdAt,
-              ...orderData,
-            });
+            if (productData.userId === userId) {
+              matchedOrders.push({
+                paymentId: paymentDoc.id,
+                orderId: orderDoc.id,
+                createdAt: paymentData.createdAt,
+                ...orderData,
+              });
+            }
+          } else {
+            if (paymentData.buyerId === userId) {
+              matchedOrders.push({
+                paymentId: paymentDoc.id,
+                createdAt: paymentData.createdAt,
+                orderId: orderDoc.id,
+                ...orderData,
+              });
+            }
           }
         }
       }
 
       return matchedOrders;
     } catch (error) {
-      console.error("Error fetching sales history:", error);
-      throw new Error("Failed to fetch sales history.");
+      console.error("Error fetching history:", error);
+      throw new Error("Failed to fetch history.");
     }
   }
 
-  // async getUserPayments(userId) {
-  //   try {
-  //     const snapshot = await getDocs(this.paymentCollection);
-  //     const payments = [];
-
-  //     snapshot.forEach((doc) => {
-  //       const data = doc.data();
-  //       if (data.userId === userId) {
-  //         payments.push({ id: doc.id, ...data });
-  //       }
-  //     });
-
-  //     return payments;
-  //   } catch (error) {
-  //     console.error("Error fetching user payments:", error);
-  //     throw new Error("Failed to fetch user purchase history.");
-  //   }
-  // }
+  async getSalesHistory(userId) {
+    return this.getHistory(userId, true);
+  }
 
   async getPurchaseHistory(userId) {
+    return this.getHistory(userId, false);
+  }
+
+  async updateOrderStatus(paymentId, orderId, statusField, statusValue) {
+    if (!paymentId || !orderId) {
+      throw new Error("Invalid paymentId or orderId.");
+    }
+
     try {
-      const snapshot = await getDocs(this.paymentCollection);
-      const matchedOrders = [];
+      const orderRef = doc(db, `payments/${paymentId}/orders`, orderId);
+      const orderSnap = await getDoc(orderRef);
 
-      for (const paymentDoc of snapshot.docs) {
-        const paymentData = paymentDoc.data();
-        const ordersRef = collection(paymentDoc.ref, "orders");
-        const ordersSnapshot = await getDocs(ordersRef);
-
-        for (const orderDoc of ordersSnapshot.docs) {
-          const orderData = orderDoc.data();
-
-          if (paymentData.buyerId === userId) {
-            matchedOrders.push({
-              paymentId: paymentDoc.id,
-              createdAt: paymentData.createdAt,
-              ...orderData,
-            });
-          }
-        }
+      if (!orderSnap.exists()) {
+        throw new Error(
+          `Order not found: paymentId=${paymentId}, orderId=${orderId}`,
+        );
       }
 
-      return matchedOrders;
+      await updateDoc(orderRef, { [statusField]: statusValue });
+
+      return { orderId, status: statusValue };
     } catch (error) {
-      console.error("Error fetching sales history:", error);
-      throw new Error("Failed to fetch sales history.");
+      console.error(`Error updating ${statusField}:`, error.message);
+      throw new Error(`Failed to update ${statusField}: ${error.message}`);
     }
+  }
+
+  async updateSalesHistory(paymentId, orderId) {
+    return this.updateOrderStatus(paymentId, orderId, "paymentStatus", "Paid");
+  }
+
+  async updatePurchaseHistoryStatus(paymentId, orderId) {
+    return this.updateOrderStatus(
+      paymentId,
+      orderId,
+      "deliveryStatus",
+      "Received",
+    );
   }
 }
 

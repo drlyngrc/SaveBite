@@ -3,6 +3,8 @@ import {
   processPayments,
   getSalesHistory,
   getPurchaseHistory,
+  updatePurchaseHistoryStatus,
+  updateSalesHistoryStatus,
 } from "../controllers/paymentController.js";
 import UserService from "../services/UserService.js";
 
@@ -25,6 +27,18 @@ router.post(
   "/api/payment/process-payment",
   userService.checkAuth.bind(userService),
   processPayments,
+);
+
+router.post(
+  "/api/payment/update-purchase",
+  userService.checkAuth.bind(userService),
+  updatePurchaseHistoryStatus,
+);
+
+router.post(
+  "/api/payment/update-sales",
+  userService.checkAuth.bind(userService),
+  updateSalesHistoryStatus,
 );
 
 export default router;
