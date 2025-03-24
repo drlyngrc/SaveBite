@@ -34,6 +34,7 @@
                   <th>Quantity</th>
                   <th>Amount</th>
                   <th>Delivery Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,6 +48,12 @@
                   <td><%= order.quantity %></td>
                   <td>₱<%= order.amount.toFixed(2) %></td>
                   <td><%= order.status %></td>
+                  <td class="action-icons">
+                    <i class='bx bx-dots-vertical-rounded' onclick="toggleDropdown(this)"></i>
+                    <div class="dropdown">
+                      <a onclick="markAsCompleted(this)">Mark as Received</a>
+                    </div>
+                  </td>
                 </tr>
                 <% }); %>
               </tbody>
@@ -79,19 +86,10 @@
           dropdown.style.display === "block" ? "none" : "block";
       }
 
-      function markAsPaid(element) {
-        console.log(element);
-        let row = element.closest("tr");
-        let badge = row.querySelector(".badge");
-        toggleStatus(badge, "pending", "paid");
-        closeDropdown(element);
-        // TK backend logic
-      }
-
       function markAsCompleted(element) {
         let row = element.closest("tr");
-        let badge = row.querySelector(".processing");
-        toggleStatus(badge, "processing", "completed");
+        // let badge = row.querySelector(".processing");
+        // toggleStatus(badge, "processing", "completed");
         closeDropdown(element);
         // TK backend logic
       }
