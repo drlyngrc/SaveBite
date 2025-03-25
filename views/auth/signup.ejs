@@ -20,7 +20,7 @@
         <input class="text-field" type="text" id="address" placeholder="Address" required />
         <input type="submit" class="submit-button solid-button" value="Sign Up" />
         <a href="/">Already have an account?</a>
-        <p id="message" class="auth-message">Message - visible for now</p>
+        <p id="message" class="auth-message">&nbsp;</p>
       </form>
     </div>
 
@@ -46,7 +46,6 @@
 
             const result = await response.json();
 
-            message.style.display = "block";
             message.style.color = response.ok ? "green" : "red";
             message.textContent = response.ok ? result.message : result.error;
           } catch (e) {

@@ -17,7 +17,7 @@
         <input class="text-field" type="password" id="password" placeholder="Password" />
         <input type="submit" class="submit-button solid-button" value="Log In" />
         <a href="/signup">Create an account</a>
-        <p id="message" class="auth-message">Message</p>
+        <p id="message" class="auth-message">&nbsp;</p>
       </form>
     </div>
 
@@ -41,7 +41,6 @@
             if (response.ok) {
               window.location.href = "/product";
             } else {
-              message.style.display = "block";
               message.style.color = "red";
               message.textContent = "Invalid email or password";
             }
